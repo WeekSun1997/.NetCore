@@ -1,0 +1,77 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SqlMagger</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'table'], function () {
+            var table = layui.table;
+            var $ = layui.jquery;
+            var form = layui.form;
+            $("#Exec").click(function () {
+                var sql = $("#Sqlstring").val();
+                if (sql == "") {
+                    alert("没有可执行的语句")
+                    return;
+                }
+                var sqlType = sql.substring(0, 6)
+                $.ajax({
+                    url: 'http://127.0.0.1:5001/api/Contor/ExceSql',
+                    data: { Sql: sql, SqlType: sqlType },
+                    xhrFields: { withCredentials: true },
+                    type: 'post',
+                    dateType: "json",
+                    success: function (data) {
+                        console.info(data)
+                        if (data.isSuccess == true) {
+                            if (sqlType == "select") {
+                                var html = "<table border='1'>";
+                                $.each(data.data.table, function (i, e) {
+                                    html += "<tr>"
+                                    $.each(e, function (j, o) {
+                                        html += "<td>" + o + "</td>"
+                                    })
+                                    html += "</tr>"
+                                })
+                                html += "</table>"
+                                form.render();
+                                $("#Main").html(html)
+                            } else {
+                                $("#Main").html("执行成功")
+                            }
+                        } else {
+                            $("#Main").html(data.msg)
+                        }
+                    }, error: function (data) {
+                        $("#Main").html(data.msg)
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class="layui-row" style="height:568px">
+        <div class="layui-col-xs12 layui-col-md12">
+            <div class="layui-form">
+                <div class="grid-demo grid-demo-bg1" style="height:420px" id="Main"></div>
+            </div>
+        </div>
+        <hr class="layui-bg-blue">
+        <div class="layui-col-xs12 layui-col-md12 .padleft">
+            <div class="layui-input layui-col-xs12 layui-col-md12 .padleft">
+                <textarea placeholder="请输入内容" class="layui-textarea .padleft" id="Sqlstring"></textarea>
+                <button class="layui-btn layui-btn-normal layui-col-xs12 layui-col-md12" id="Exec">执行</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

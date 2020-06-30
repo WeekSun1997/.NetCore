@@ -1,0 +1,5 @@
+G:\Program Files (x86)\Web\Web\IProxy\bin\Debug\netcoreapp2.2\IProxy.deps.json
+G:\Program Files (x86)\Web\Web\IProxy\bin\Debug\netcoreapp2.2\IProxy.dll
+G:\Program Files (x86)\Web\Web\IProxy\obj\Debug\netcoreapp2.2\IProxy.csproj.CoreCompileInputs.cache
+G:\Program Files (x86)\Web\Web\IProxy\obj\Debug\netcoreapp2.2\IProxy.AssemblyInfoInputs.cache
+G:\Program Files (x86)\Web\Web\IProxy\obj\Debug\netcoreapp2.2\IProxy.AssemblyInfo.cs

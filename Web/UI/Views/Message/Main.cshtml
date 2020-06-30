@@ -1,0 +1,92 @@
+﻿    
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Main</title>
+
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="~/Script/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/Script/layui/layui.js"></script>
+    <style type="text/css">
+        .padleft {
+            padding-left: 0px
+        }
+    </style>
+    <script>
+        var $
+        layui.use(['form'], function () {
+            var form = layui.form
+                , layer = layui.layer;
+            $ = layui.jquery;
+
+            $("#Send").click(function () {
+                var MsgBody = $("#MsgBody").val();
+                if (MsgBody == "")
+                    return;
+                var sendid = 'A6DA808D-6A5D-4EC7-A37A-623B11AAA249'
+                var Receive = '81E78BD3-024E-44E2-A30A-7135554E35DD'
+                var message = { SendUserID: sendid, ReceiveUserID: Receive, MsgBody: MsgBody, SendTime: '2020-4-24', IsSuccess: true }
+                console.info(JSON.stringify(message))
+                $.ajax({
+                    url: 'https://localhost:5001/api/Message/SendMsg',
+                    data: JSON.stringify(message),
+                    type: 'post',
+                    dateType: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        console.info(data)
+                        if (data.code > 0) {
+                            console.info(1)
+                            $("#MsgBody").val("")
+                        }
+                    }
+                })
+            })
+            var y = setInterval("Pull()", 1000)
+        })
+        function Pull() {
+            var parement = { Sid: 'A6DA808D-6A5D-4EC7-A37A-623B11AAA249', Rid: '81E78BD3-024E-44E2-A30A-7135554E35DD' }
+            $.ajax({
+                url: 'https://localhost:5001/api/Message/GetMsg',
+                data: JSON.stringify(parement),
+                type: 'post',
+                dateType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    console.info(data)
+                    var html = "";
+                    $.each(data.data, function (i, e) {
+                        console.info(e)
+                        html += e.sendName + "：" + e.msgBody + "</br>"
+                    })
+                    $("#Main").html(html)
+                }
+            })
+        }
+
+    </script>
+</head>
+<body>
+    <div class="layui-row" style="height:568px">
+        <div class="layui-col-xs12 layui-col-md12">
+            <div class="grid-demo grid-demo-bg1" style="height:420px" id="Main"></div>
+        </div>
+        <hr class="layui-bg-blue">
+        <div class="layui-col-xs12 layui-col-md12 .padleft">
+            <div class="layui-input layui-col-xs12 layui-col-md12 .padleft">
+                <textarea placeholder="请输入内容" class="layui-textarea .padleft" id="MsgBody"></textarea>
+                <button class="layui-btn layui-btn-normal layui-col-xs12 layui-col-md12" id="Send">发送</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

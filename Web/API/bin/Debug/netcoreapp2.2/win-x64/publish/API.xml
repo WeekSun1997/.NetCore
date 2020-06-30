@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>API</name>
+    </assembly>
+    <members>
+        <member name="M:API.Controllers.LoginController.Login(System.String,System.String)">
+            <summary>
+            用户登录方法
+            </summary>
+            <param name="UserName">用户名</param>
+            <param name="Password">密码</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.LoginController.Register(System.String)">
+            <summary>
+            用户注册
+            </summary>
+            <param name="UserName">用户名</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

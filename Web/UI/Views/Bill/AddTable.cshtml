@@ -1,0 +1,228 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddTable</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'table'], function () {
+            var table = layui.table;
+            var $ = layui.jquery;
+            var form = layui.form;
+            var UpdTable = $("#UpdTable").val();
+            if (UpdTable != "") {
+                $.ajax({
+                    url: 'http://127.0.0.1:5001/api/Contor/LoadTableCloums',
+                    data: { tableName: UpdTable },
+                    async: false,
+                    xhrFields: { withCredentials: true },
+                    type: 'get',
+                    dateType: "json",
+                    success: function (data) {
+                        console.info(data.data)
+                        $("#TableName").val(UpdTable)
+                        $.each(data.data, function (o, e) {
+                            var isnull = e.tableIsNull == "true" ? "checked='true'" : "";
+                            var tableKey = e.tableKey == "true" ? "checked='true'" : "";
+                            var tableIsAuto = e.tableIsAuto == "true" ? "checked='true'" : "";
+                            var tr = "<tr>"
+                            tr += "<td class='layui-form'><input type='checkbox' class='xuhao' tag='" + e.tableName + "' tagType='" + e.tableType + "'></td>"
+                            tr += "<td><input type='text' class='layui-input tableName'value='" + e.tableName + "'></td>"
+                            tr += "<td><select class='tableType'><option value='" + e.tableType + "'>int</option>"
+                            tr += "<option value = 'varchar' >varchar</option>";
+                            tr += "<option value = 'datetime' >datetime</option>";
+                            tr += "<select></td>";
+                            tr += "<td><input type='text' class='tableLength layui-input' value='" + e.tableLength + "'></td>"
+                            tr += "<td><input type='text' class='tableFloat layui-input'></td>"
+                            tr += "<td class='layui-form'><input type='checkbox'" + isnull + "></td>"
+                            tr += "<td class='layui-form'><input type='checkbox'class='IsKey'" + tableKey + "></td>"
+                            tr += "<td class='layui-form'><input type='checkbox' class='IsAtuo'" + tableIsAuto + "></td>"
+                            tr + "</tr>";
+                            $("tbody").append(tr)
+                            form.render();
+                        })
+                    }
+                })
+            }
+            $("#add").click(function () {
+                var tr = "<tr>"
+                tr += "<td class='layui-form'><input type='checkbox' class='xuhao'></td>"
+                tr += "<td><input type='text' class='layui-input tableName'></td>"
+                tr += "<td><select class='tableType'><option value='int'>int</option>"
+                tr += "<option value = 'varchar' >varchar</option>";
+                tr += "<option value = 'datetime' >datetime</option>";
+                tr += "<select></td>";
+                tr += "<td><input type='text' class='tableLength layui-input'></td>"
+                tr += "<td><input type='text' class='tableFloat layui-input'></td>"
+                tr += "<td class='layui-form'><input type='checkbox'></td>"
+                tr += "<td class='layui-form'><input type='checkbox'class='IsKey' ></td>"
+                tr += "<td class='layui-form'><input type='checkbox' class='IsAtuo'></td>"
+                tr + "</tr>";
+                $("tbody").append(tr)
+                form.render();
+            })
+
+            $("#del").click(function () {
+                $(".xuhao").each(function (i, e) {
+                    var checked = $(e).prop("checked");
+                    var length = $(".xuhao").length
+                    if (length == 1) {
+                        return false;
+                    } else {
+                        if (checked == true) {
+                            $(e).parent().parent().remove();
+                        }
+                    }
+                })
+            })
+
+            $("#save").click(function () {
+                var name = $("#TableName").val();
+                var type = $("#type").val();
+                if (name == "") {
+                    alert("表名不能为空");
+                    return false;
+                }
+                var list = $("tbody tr");
+                if (list.length == 0) {
+                    alert("请先添加字段");
+                    return false;
+                }
+                var data = new Array();
+                var falg = true;
+                $("tbody tr").each(function (i, e) {
+                    var OldtableName = $(e).children().eq(0).children().attr("tag");
+                    var OldtableType = $(e).children().eq(0).children().attr("tagType");
+                    console.info(OldtableType)
+                    var tableName = $(e).children().eq(1).children().val();
+                    if (tableName == "") {
+                        alert("字段名不能为空");
+                        falg = false;
+                        return false;
+                    }
+                    var tableType = $(e).children().eq(2).children().val();
+                    if (tableType == "") {
+                        alert("数据类型必须选择")
+                        falg = false;
+                        return false;
+                    }
+                    var tableLength = $(e).children().eq(3).children().val();
+                    if (tableLength == "") {
+                        alert("数据长度必须填写")
+                        falg = false;
+                        return falg;
+                    } else if (tableType == "datetime") {
+                        if (tableLength != "0") {
+                            alert("时间类型的数据格式长度必须为0")
+                            falg = false;
+                            return false;
+                        }
+                    }
+                    var tableFloat = $(e).children().eq(4).children().val();
+                    var tableIsNull = $(e).children().eq(5).children().prop("checked")
+                    var tableKey = $(e).children().eq(6).children().prop("checked")
+                    if (tableKey == true) {
+                        if (tableIsNull == true) {
+                            alert("主键不允许为空！")
+                            falg = false;
+                            return false;
+                        }
+
+                    }
+                    var tableIsAuto = $(e).children().eq(7).children().prop("checked");
+                    if (tableIsAuto == true) {
+                        if (tableType != "int" || tableKey != true) {
+                            alert("只有int类型的主键才可以自动增长")
+                            falg = false;
+                            return false;
+                        }
+                    }
+                    var jsondata = {
+                        OldtableName: OldtableName,
+                        OldtableType: OldtableType,
+                        tableName: tableName,
+                        tableType: tableType,
+                        tableLength: tableLength,
+                        tableFloat: tableFloat,
+                        tableKey: tableKey,
+                        tableIsNull: tableIsNull,
+                        tableIsAuto: tableIsAuto
+                    }
+                    data[i] = jsondata;
+                })
+
+                var json = { "data": data, "TableName": name, 'type': type }
+                if (falg) {
+                    $.ajax({
+                        url: 'http://127.0.0.1:5001/api/Contor/AddTable',
+                        data: json,
+                        async: false,
+                        xhrFields: { withCredentials: true },
+                        type: 'post',
+                        dateType: "json",
+                        success: function (data) {
+                            console.info(data)
+                            if (data.isSuccess == true) {
+                                layer.msg('保存成功', {
+                                    offset: '15px'
+                                    , icon: 1
+                                    , time: 1000
+                                }, function () {
+                                    $("tbody tr").each(function (i, e) {
+                                        $(e).remove();
+                                    });
+                                    $("#TableName").val("")
+                                    location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg, {
+                                    offset: '15px'
+                                });
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+    <style type="text/css">
+        td {
+            width: 12%
+        }
+
+        table {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <input type="hidden" value="@ViewData["UpdTable"]" id="UpdTable" />
+    <input type="hidden" value="@ViewData["Type"]" id="type" />
+    <button type="button" id="add" class="layui-btn">添加</button>
+    <button type="button" id="save" class="layui-btn layui-btn-normal">保存</button>
+    <button type="button" id="del" class="layui-btn layui-btn-danger">删除</button>
+    <div class="layui-form-item">
+        <label class="layui-form-label">表名</label>
+        <div class="layui-input-block">
+            <input type="text" name="" id="TableName" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form">
+        <table lay-filter="demo">
+            <thead>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</body>
+
+
+</html>

@@ -1,0 +1,117 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BasView</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+</head>
+<body>
+    <div>
+        <button type="button" id="add" class="layui-btn">添加</button>
+        <button type="button" id="Upd" class="layui-btn layui-btn-normal">修改</button>
+        <button type="button" id="reload" class="layui-btn layui-btn-normal">刷新</button>
+        <button type="button" id="Del" class="layui-btn layui-btn-danger">删除</button>
+        <button type="button" id="Magger" class="layui-btn layui-btn-danger">控制台</button>
+    </div>
+    <table class="layui-hide" id="tab"></table>
+    <script>
+        layui.use(['form', 'table'], function () {
+            var table = layui.table;
+            var $ = layui.jquery;
+            table.render({
+                elem: '#tab'
+                , height: 500
+                , url: 'http://127.0.0.1:5001/api/Contor/getTable' //数据接口
+                , page: true //开启分页
+                , cols: [[
+                    {
+                        field: 'rownum', title: '序号', sort: true   , fixed: 'left', templet: function (d) {
+                            return '<input type="radio" name="table" value="' + d.tableName + '">'
+                        }
+                    },
+                    { field: 'tableName', title: '名称', sort: true, fixed: 'left' },
+                    { field: 'tableType', title: '类型', sort: true, fixed: 'left' }
+                ]]
+                , parseData: function (res) { //res 即为原始返回的数据
+                    console.info(res);
+                    return {
+                        "code": res.isSuccess == true ? 0 : 500, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "data": res.data //
+                    };
+                }
+            })
+            $("#add").click(function () {
+                layer.open({
+                    type: 2 //此处以iframe举例
+                    , title: '创建新表'
+                    , area: ['800px', '600px']
+                    , shade: 0
+                    , maxmin: true
+                    , content: '/Bill/AddTable?Type=Add'
+                })
+            })
+            $("#Del").click(function () {
+                layer.confirm('是否确定删除？', {
+                    btn: ['确定', '取消']
+                }, function (index) {
+                    var tablename = $("input[name='table']:checked").val();
+                    if (tablename == "" || tablename == undefined) {
+                        alert("请选择你要删除的表")
+                        return
+                    }
+                    $.ajax({
+                        url: "http://127.0.0.1:5001/api/Contor/DelTable",
+                        data: { TableName: tablename },
+                        type: 'post',
+                        xhrFields: { withCredentials: true },
+                        success: function (data) {
+                            console.info(data)
+                            if (data.isSuccess == true) {
+                                layer.close(index)
+                                location.reload()
+                            }
+                        }
+                    })
+                }, function () {
+                })
+            })
+            $("#reload").click(function () {
+                location.reload();
+            })
+            $("#Upd").click(function () {
+                var tablename = $("input[name='table']:checked").val();
+                if (tablename == "" || tablename == undefined) {
+                    alert("请选择需要修改的表");
+                    return
+                }
+                layer.open({
+                    type: 2 //此处以iframe举例
+                    , title: '创建新表'
+                    , area: ['800px', '600px']
+                    , shade: 0
+                    , maxmin: true
+                    , content: '/Bill/AddTable?UpdTable=' + tablename + '&&Type=Upd'
+                })
+            })
+            $("#Magger").click(function () {
+                layer.open({
+                    type: 2 //此处以iframe举例
+                    , title: '执行Sql语句'
+                    , area: ['800px', '600px']
+                    , shade: 0
+                    , maxmin: true
+                    , content: '/Bill/SqlMagger'
+                })
+            })
+
+        })
+    </script>
+</body>
+</html>

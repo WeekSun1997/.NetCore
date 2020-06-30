@@ -1,0 +1,9 @@
+G:\Program Files (x86)\Web\Web\Model\bin\Debug\netcoreapp2.2\Model.deps.json
+G:\Program Files (x86)\Web\Web\Model\bin\Debug\netcoreapp2.2\Model.dll
+G:\Program Files (x86)\Web\Web\Model\bin\Debug\netcoreapp2.2\Model.pdb
+G:\Program Files (x86)\Web\Web\Model\obj\Debug\netcoreapp2.2\Model.csproj.CoreCompileInputs.cache
+G:\Program Files (x86)\Web\Web\Model\obj\Debug\netcoreapp2.2\Model.AssemblyInfoInputs.cache
+G:\Program Files (x86)\Web\Web\Model\obj\Debug\netcoreapp2.2\Model.AssemblyInfo.cs
+G:\Program Files (x86)\Web\Web\Model\obj\Debug\netcoreapp2.2\Model.dll
+G:\Program Files (x86)\Web\Web\Model\obj\Debug\netcoreapp2.2\Model.pdb
+G:\Program Files (x86)\Web\Web\Model\obj\Debug\netcoreapp2.2\Model.csprojAssemblyReference.cache

@@ -1,0 +1,101 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BillRemask</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'table'], function () {
+            var table = layui.table;
+            var $ = layui.jquery;
+            var TableName = $("#TableName").val();
+            var col = [];
+            $.ajax({
+                url: 'http://127.0.0.1:5001/api/Contor/BaseRemask',
+                data: { TableName: TableName },
+                xhrFields: { withCredentials: true },
+                success: function (data) {
+                    $.each(data.data.table, function (i, e) {
+                        col[i] = { field: e.remask, title: e.filedName, edit: 'text' }
+                    })
+                    table.render({
+                        elem: '#tab'
+                        , height: 500
+                        , cols: [col]
+                        , data: data.data.table1
+                        , limit: 10000
+                    })
+                }
+            })
+            $("#add").click(function () {
+                var html = "<tr>"
+                console.info(col)
+                $.each(col, function (i, e) {
+                    html += "<td><input type='text' class='layui-input'></td>"
+                })
+                html += "</tr>"
+                $("tbody").append(html)
+            })
+            $("#save").click(function () {
+                var JsonData = new Array();
+                $("tbody tr").each(function (i, e) {
+                    var data = "{";
+                    for (var j = 0; j < col.length; j++) {
+                        var text = $(e).children().children().eq(j).val();
+                        if (text == "") {
+                            text = $(e).children().children().eq(j).text();
+                        }
+                        console.info(text)
+                        var key = col[j].field;
+                        var key = key.substring(0, 1).toUpperCase() + key.substring(1)
+                        console.info(key)
+                        data += "'" + key + "':'" + text + "',"
+                    }
+                    data = data.substring(0, data.length - 1);
+                    data += "}";
+                    console.info(data)
+                    JsonData[i] = eval('(' + data + ')')
+                })
+                console.info(JsonData)
+                $.ajax({
+                    url: "http://127.0.0.1:5001/api/Contor/BaseRemaskSave",
+                    data: { JsonData: JSON.stringify(JsonData), TableName: TableName },
+                    xhrFields: { withCredentials: true },
+                    type: "post",
+                    success: function (data) {
+                        if (data.isSuccess == true) {
+                            layer.msg('保存成功', {
+                                offset: '15px'
+                                , icon: 1
+                                , time: 1000
+                            }, function () {
+                                location.reload();
+                            });
+                        } else {
+                            layer.msg(data.msg, {
+                                offset: '15px'
+                            });
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <input type="hidden" id="TableName" value="@ViewData["TableName"]" />
+    <div>
+        <button type="button" id="add" class="layui-btn">添加</button>
+        <button type="button" id="save" class="layui-btn">保存</button>
+        <button type="button" id="reload" class="layui-btn layui-btn-normal">刷新</button>
+    </div>
+    <table id="tab"></table>
+</body>
+</html>

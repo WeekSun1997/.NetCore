@@ -1,0 +1,129 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BaseSearch</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'table'], function () {
+            var form = layui.form;
+            var $ = layui.jquery;
+            var BillNo = $("#BillNo").val();
+            $.ajax({
+                url: 'http://127.0.0.1:5001/api/Contor/BaseSearch',
+                type: 'get',
+                data: { BillNo: BillNo },
+                xhrFields: { withCredentials: true },
+                datatype: 'json',
+                success: function (data) {
+                    console.info(data)
+                    $.each(data.data, function (i, e) {
+                        html = "<tr>";
+                        html += "<td><input type='text'readonly='true' class='layui-input'value='" + e.billTableName + "'></td>";
+                        html += "<td><input type='text'readonly='true' tag='" + e.remask + "' class='layui-input'value='" + e.filedName + "'></td>";
+                        html += "<td><select>";
+                        html += "<option value='='>等于</option>";
+                        html += "<option value='>'>大于</option>";
+                        html += "<option value='<'>小于</option>";
+                        html += "<option value='>='>大于等于</option>";
+                        html += "<option value='<='>小于等于</option>";
+                        html += "<option value='!='>不等于</option>";
+                        html += "<option value='not null'>不为空</option>";
+                        html += "<option value='is null'>空</option>";
+                        html += "<option value='like'>包含</option>";
+                        html += "<option value='BETWEEN'>介于</option>";
+                        html += "</select></td>";
+                        html += "<td><input type='text' class='layui-input'></td>";
+                        html += "<td><input type='text' class='layui-input'></td>";
+                        $("tbody").append(html)
+                    })
+                    form.render();
+                }
+            })
+            $("#Search").click(function () {
+                var data = $("tbody tr");
+                var str = "";
+                var flag;
+                console.info(data)
+                $.each(data, function (i, e) {
+
+                    var filedName = $(e).children().eq(1).children().attr("tag")
+                    var exist = $(e).children().eq(2).children().val();
+                    var value1 = $(e).children().eq(3).children().val();
+                    var value2 = $(e).children().eq(4).children().val();
+                    if (value1 == "") {
+                        value1 = "-1"
+                    }
+                    if (value2 == "") {
+                        value2 = "-1"
+                    }
+                    if (exist == "=" && value1 != "-1") {
+                        str += "and " + filedName + exist + "'" + value1 + "'"
+
+                    }
+                    if (exist == ">=" || exist == ">" || exist == "<" || exist == "<=" || exist == "!=") {
+                        if (value1 == "-1") {
+                            flag = false;
+                            alert("运算符号为【大于,小于,大于等于，小于等于,不等于】时必须填写值1")
+                            return false;
+                        }
+                        str += "and " + filedName + exist + "'" + value1 + "'"
+                    }
+                    if (exist == "is null" || exist == "not null") {
+                        str += "and " + filedName + exist;
+                    }
+                    if (exist == "like") {
+                        if (value1 == "-1") {
+                            flag = false;
+                            alert("运算符号为【包含】时必须填写值1")
+                            return false;
+                        }
+                        console.info(value1)
+                        str += "and " + filedName + " " + exist + " '$$" + value1 + "$$'"
+                    }
+                    if (exist == "BETWEEN") {
+                        if (value1 == "-1" || value2 == "-1") {
+                            flag = false;
+                            alert("运算符号为【包含】时必须填写值1和值2")
+                            return false;
+                        }
+                        str += "and " + filedName + " BETWEEN" + "  '" + value1 + "' and '" + value2 +"'"
+                    }
+                    str += " ";
+                })
+                if (flag != false) {
+                    console.info(str)
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                    window.parent.location.href = "/Base/BaseTable?BillNo=" + BillNo + "&SearchStr=" + str;
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <form class="layui-form">
+        <input type="hidden" id="BillNo" value="@ViewData["BillNo"]" />
+        <table>
+            <thead>
+                <tr>
+                    <th>表名</th>
+                    <th>字段名</th>
+                    <th>运算符</th>
+                    <th>值1</th>
+                    <th>值2</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <center><button type="button" id="Search" class="layui-btn">确定</button></center>
+    </form>
+</body>
+</html>

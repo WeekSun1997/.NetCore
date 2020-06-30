@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Attribute\AttributeArray.csproj" />
+    <ProjectReference Include="..\Interface\Interface.csproj" />
+    <ProjectReference Include="..\Library\Library.csproj" />
+    <ProjectReference Include="..\Model\Model.csproj" />
+    <ProjectReference Include="..\MysqlEntity.Core\MysqlEntity.Core.csproj" />
+  </ItemGroup>
+
+</Project>

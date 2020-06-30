@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StackExchange.Redis.Extensions.Core" Version="6.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cache\Cache.csproj" />
+    <ProjectReference Include="..\MongoDB\MongoDB.csproj" />
+    <ProjectReference Include="..\MysqlEntity.Core\MysqlEntity.Core.csproj" />
+    <ProjectReference Include="..\Reflection\Reflection.csproj" />
+  </ItemGroup>
+
+</Project>

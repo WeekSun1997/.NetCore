@@ -1,0 +1,115 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<script src="~/layuiadmin/layui/layui.js"></script>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BaseFrom</title>
+    <script>
+        layui.use(['form', 'table'], function () {
+            var form = layui.form;
+            var $ = layui.jquery;
+            var f = $("form");
+            var BillNo = $("#TableBillNo").val();
+            var BillID = $("#TableBillID").val();
+            $.ajax({
+                url: 'http://127.0.0.1:5001/api/Contor/BaseFrom',
+                type: 'post',
+                data: { BillNo: BillNo, BillID: BillID },
+                xhrFields: { withCredentials: true },
+                dataType: "json",
+                success: function (data) {
+                    console.info(data.data.dataList)
+                    $.each(data.data.dataList, function (i, e) {
+                        var html = "";
+                        html += '<div class="layui-form-item layui-inline">';
+                        html += '<label class="layui-form-label">' + e.filedName + '</label>';
+                        html += '<div class="layui-input-inline">'
+                        if (e.filedType == "Date") {
+                            var t = "";
+                            if (e.value != "" && e.value != undefined) {
+                                t = e.value;
+                            }
+                            html += '<input type="Date"  value="' + t + '"  name="' + e.remask + '" id="' + e.remask + '" class="layui-input">'
+                        } else if (e.filedType == "Select") {
+                            html += '<select    name="' + e.remask + '" id="' + e.remask + '" lay-filter="' + e.remask + '">'
+                            var index = e.bindList;
+                            var tname = index.toLowerCase()
+                            $.each(data.data[tname], function (j, k) {
+                                if (k.id == e.value) {
+                                    html += '<option value="' + k.id + '" selected>' + k.value + '</option>';
+                                } else {
+                                    html += '<option value="' + k.id + '">' + k.value + '</option>';
+                                }
+                            })
+                            html += '</select>'
+
+                        } else if (e.filedType == "Hide") {
+                            html = "";
+                            var t = "";
+                            if (e.value != "" && e.value != undefined) {
+                                t = e.value;
+                            }
+                            html += '<input type="hidden" value="' + t + '" name="' + e.remask + '" id="' + e.remask + '">'
+                        } else if (e.filedType == "Auto") {
+                            var t = "";
+                            if (e.value != "" && e.value != undefined) {
+                                t = e.value;
+                            }
+                            html += '<input type="Text" value="' + t + '" name="' + e.remask + '" id="' + e.remask + '" readonly="true"  class="layui-input">'
+                        }
+                        else {
+                            var t = "";
+                            if (e.value != "" && e.value != undefined) {
+                                t = e.value;
+                            }
+                            html += '<input type="Text" value="' + t + '" name="' + e.remask + '" id="' + e.remask + '"  class="layui-input">'
+                        }
+                        $("#body").append(html)
+                    })
+                    form.render();
+
+                }
+            })
+            $("#add").click(function () {
+                var data = decodeURIComponent(f.serialize(), true);
+                $.ajax({
+                    url: 'http://127.0.0.1:5001/api/Contor/BaseSave',
+                    data: { BillID: BillNo, Mb: data },
+                    xhrFields: { withCredentials: true },
+                    type: 'post',
+                    success: function (data) {
+                        if (data.isSuccess == true) {
+                            layer.msg('保存成功', {
+                                offset: '15px'
+                                , icon: 1
+                                , time: 1000
+                            }, function () {
+                                location.reload();
+                            });
+                        } else {
+                            layer.msg(data.msg, {
+                                offset: '15px'
+                            });
+                        }
+                    }
+
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <form class="layui-form" method="post" action="">
+        <input type="hidden" value="@ViewData["BillID"]" id="TableBillID" />
+        <input type="hidden" value="@ViewData["BillNo"]" id="TableBillNo" />
+        <div id="body"></div>
+        <center><button type="button" id="add" class="layui-btn">添加</button></center>
+    </form>
+</body>
+</html>

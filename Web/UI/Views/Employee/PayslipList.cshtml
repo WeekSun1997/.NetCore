@@ -1,0 +1,115 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EmployeeList</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'table'], function () {
+            var table = layui.table;
+            var $ = layui.jquery;
+            table.render({
+                elem: '#tab'
+                , height: 500
+                , url: 'http://127.0.0.1:5001/api/Employee/payslipList' //数据接口
+                , page: true //开启分页
+                , toolbar: '#toolbarDemo'
+                , cols: [[
+                    { field: 'userName', title: '员工姓名', sort: true, fixed: 'left' },
+                    { field: 'payDate', title: '发薪日期', sort: true },
+                    { field: 'basePay', title: '基本工资', sort: true },
+                    { field: 'subsidy', title: '各项补助', sort: true },
+                    { field: 'reward', title: '奖励工资', sort: true },
+                    { field: 'other', title: '其他奖励', sort: true},
+                    { field: 'wagesPayable', title: '应发工资', sort: true},
+                    { field: 'deduction', title: '扣款项', sort: true},
+                    { field: 'netsalary', title: '实发工资', sort: true},
+                    { field: 'remarks', title: '备注', sort: true },
+                    { fixed: 'billId', title: '操作', toolbar: '#barDemo', width: 150, fixed: 'right' }
+                ]]
+                , parseData: function (res) { //res 即为原始返回的数据
+                    console.info(res.data)
+                    return {
+                        "code": res.isSuccess == true ? 0 : 500, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "data": res.data //
+                    };
+                }
+            })
+            table.on('tool(tab)', function (obj) {
+                var data = obj.data;
+                //console.log(obj)
+                console.info(obj)
+                if (obj.event === 'del') {
+                    layer.confirm('真的删除行么', function (index) {
+                        $.ajax({
+                            url: "http://127.0.0.1:5001/api/Employee/DelPayslip",
+                            data: { BillID: obj.data.billId },
+                            xhrFields: { withCredentials: true },
+                            type: 'post',
+                            success: function (data) {
+                                console.info(data)
+                                if (data.isSuccess == true) {
+                                    obj.del();
+                                    layer.close(index);
+                                }
+                            }
+                        })
+                    });
+                } else if (obj.event === 'edit') {
+                    layer.open({
+                        type: 2 //此处以iframe举例
+                        , title: '创建新表'
+                        , area: ['400px', '600px']
+                        , shade: 0
+                        , maxmin: true
+                        , content: '/Employee/InsertEmployee/?EmpId=' + obj.data.userId
+                    })
+                } else {
+                    layer.open({
+                        type: 2 //此处以iframe举例
+                        , title: '创建新表'
+                        , area: ['400px', '600px']
+                        , shade: 0
+                        , maxmin: true
+                        , content: '/Employee/InsertEmployee/?EmpId=' + obj.data.userId
+                    })
+                }
+            })
+            $("#AddEmployee").click(function () {
+                layer.open({
+                    type: 2 //此处以iframe举例
+                    , title: '创建新表'
+                    , area: ['400px', '600px']
+                    , shade: 0
+                    , maxmin: true
+                    , content: '/Employee/EmployeePayslip'
+                })
+
+            })
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" id="AddEmployee" lay-event="getCheckData">新增工资条</button>
+            </div>
+        </script>
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+        <table id="tab" lay-filter="tab"></table>
+    </div>
+</body>
+</html>

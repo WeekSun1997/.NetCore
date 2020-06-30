@@ -1,0 +1,248 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>InsertEmployee</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'table', 'laydate'], function () {
+            var table = layui.table;
+            var laydate = layui.laydate;
+            var $ = layui.jquery;
+            laydate.render({
+                elem: '#EntryDate' //指定元素
+            });
+            laydate.render({
+                elem: '#QuitDate' //指定元素
+            });
+            laydate.render({
+                elem: '#BirthDate' //指定元素
+            });
+            var UserId = $("#userId").val();
+            if (UserId != "") {
+                console.info(UserId)
+                $.ajax({
+                    url: 'http://127.0.0.1:5001/api/Employee/EmployeeDetail',
+                    data: { EmpId: UserId },
+                    xhrFields: { withCredentials: true },
+                    type: 'post',
+                    dateType: "json",
+                    success: function (data) {
+                        var user = data.data
+                        $("#UserName").val(user.userName);
+                        $("#IdentityID").val(user.identityId);
+                        $("#Phone").val(user.phone);
+                        $("#BankCard").val(user.bankCard);
+                        $("#Address").val(user.address);
+                        $("#ZFBID").val(user.zfbid);
+                        $("#VXID").val(user.vxid);
+                        $("#UrgentName").val(user.urgentName);
+                        $("#UrgentPhone").val(user.urgentPhone);
+                        $("#EntryDate").val(user.entryDate);
+                        $("#BirthDate").val(user.birthDate);
+                        $("#QuitDate").val(user.quitDate);
+                        $("#BankName").val(user.bankName)
+                        if (user.employeeType == "true") {
+                            $("input[name=EmployeeType][value='true']").attr("checked", true);
+                        } else {
+                            $("input[name=EmployeeType][value='flase']").attr("checked", true);
+                        }
+                        if (user.isOnLine == "true") {
+                            $("input[name=IsOnLine][value='true']").attr("checked", true);
+                        } else {
+                            $("input[name=IsOnLine][value='flase']").attr("checked", true);
+                        }
+                    }
+                })
+            }
+
+            $("#submit").click(function () {
+                var UserId = $("#userId").val();
+                var UserName = $("#UserName").val();
+                var IdentityID = $("#IdentityID").val();
+                var Phone = $("#Phone").val();
+                var BankCard = $("#BankCard").val();
+                var Address = $("#Address").val();
+                var ZFBID = $("#ZFBID").val();
+                var VXID = $("#VXID").val();
+                var UrgentName = $("#UrgentName").val();
+                var UrgentPhone = $("#UrgentPhone").val();
+                var EntryDate = $("#EntryDate").val();
+                var BirthDate = $("#BirthDate").val();
+                var QuitDate = $("#QuitDate").val();
+                var BankName = $("#BankName").val()
+                var EmployeeType = $("input[name='EmployeeType']:checked").val();
+                var IsOnLine = $("input[name='IsOnLine']:checked").val();
+                var json = {
+                    UserId: UserId,
+                    UserName: UserName,
+                    IdentityID: IdentityID,
+                    Phone: Phone,
+                    BankCard: BankCard,
+                    Address: Address,
+                    ZFBID: ZFBID,
+                    VXID: VXID,
+                    UrgentName: UrgentName,
+                    UrgentPhone: UrgentPhone,
+                    EntryDate: EntryDate,
+                    BirthDate: BirthDate,
+                    QuitDate: QuitDate,
+                    EmployeeType: EmployeeType,
+                    IsOnLine: IsOnLine,
+                    BankName: BankName
+                }
+                console.info(json)
+                $.ajax({
+                    url: 'http://127.0.0.1:5001/api/Employee/SaveEmployee',
+                    data: json,
+                    xhrFields: { withCredentials: true },
+                    type: 'post',
+                    dateType: "json",
+                    success: function (data) {
+                        console.info(data.isSuccess)
+                        if (data.isSuccess == true) {
+                            layer.msg('保存成功', {
+                                offset: '15px'
+                                , icon: 1
+                                , time: 1000
+                            }, function () {
+                                location.reload();
+                            });
+                        } else {
+                            layer.msg(data.msg, {
+                                offset: '15px'
+                            });
+                        }
+                    }
+                })
+            })
+        });
+
+    </script>
+</head>
+<body>
+    <div style="margin:0px auto;">
+        <form class="layui-form" method="post" action="">
+            <input type="hidden" id="userId" value="@ViewData["UserId"]" />
+            <div class="layui-form-item layui-inline ">
+                <label class="layui-form-label">姓名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="UserName" id="UserName" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label ">身份证号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="IdentityID" id="IdentityID" lay-verify="required|identity" lay-reqtext="用户名是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">手机号</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" id="Phone" name="Phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">住址</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="Address" name="Address" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">银行卡号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="BankCard" name="BankCard" lay-verify="required|number" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">持卡人</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="BankName" name="BankName" lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">支付宝账号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="ZFBID" name="ZFBID" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">微信账号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="VXID" name="VXID" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">紧急联系人</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="UrgentName" name="UrgentName" value="" lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">联系电话</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="UrgentPhone" name="UrgentPhone" lay-verify="required|number" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">入职日期</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="EntryDate" name="EntryDate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">离职日期</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="QuitDate" name="QuitDate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">员工生日</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="BirthDate" name="BirthDate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">员工类型</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="EmployeeType" value="true" title="长期" checked="">
+                    <input type="radio" name="EmployeeType" value="false" title="兼职">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">在职</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="IsOnLine" value="true" title="在职" checked="">
+                    <input type="radio" name="IsOnLine" value="false" title="离职">
+                </div>
+                @*<div class="layui-input-block">
+                        <input type="checkbox" id="IsOnLine" name="IsOnLine" lay-skin="switch" lay-text="ON|OFF">
+                    </div>*@
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" id="submit" class="layui-btn">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

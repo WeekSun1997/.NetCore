@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>G:\Program Files (x86)\Web\Web\API\API.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AutoFacAop\AutoFacAop.csproj" />
+    <ProjectReference Include="..\BaseBill\BaseServer.csproj" />
+    <ProjectReference Include="..\Cache\Cache.csproj" />
+    <ProjectReference Include="..\DBServer\DBServer.csproj" />
+    <ProjectReference Include="..\EntityFramework.Core\EntityFramework.Core.csproj" />
+    <ProjectReference Include="..\ExceptionMiddleware\ExceptionMiddleware.csproj" />
+    <ProjectReference Include="..\IdentityConfig\IdentityConfig.csproj" />
+    <ProjectReference Include="..\Interface\Interface.csproj" />
+    <ProjectReference Include="..\JWTMiddleware\JWTMiddleware.csproj" />
+    <ProjectReference Include="..\Library\Library.csproj" />
+    <ProjectReference Include="..\MongoDB\MongoDB.csproj" />
+    <ProjectReference Include="..\MysqlEntity.Core\MysqlEntity.Core.csproj" />
+    <ProjectReference Include="..\Reflection\Reflection.csproj" />
+    <ProjectReference Include="..\WebSocketMagger\WebSocketMagger.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="API.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>

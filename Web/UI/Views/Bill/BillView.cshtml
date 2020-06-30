@@ -1,0 +1,147 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BillView</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'table'], function () {
+            var $ = layui.jquery;
+            var id = $("#id").val();
+            var Type = $("#Type").val();
+            if (Type != "Add") {
+                $.ajax({
+                    url: 'http://127.0.0.1:5001/api/Contor/BaseInfo',
+                    data: { id: id },
+                    xhrFields: { withCredentials: true },
+                    success: function (data) {
+                        $("#BillID").val(data.data[0].billId);
+                        $("#billTable").val(data.data[0].billTable);
+                        var xradio = $("input[name='islist']");
+                        for (var i = 0; i < xradio.length; i++) {
+                            console.info(String(xradio[i].value) == String(data.data[0].islist))
+                            if (String(xradio[i].value) == String(data.data[0].islist)) {
+                                xradio[i].checked=true;
+                            }
+                        }
+                        $("#modularInfoId").val(data.data[0].modularInfoId);
+                        $("#modularInfoname").val(data.data[0].modularInfoname);
+                        $("#modularInfoulr").val(data.data[0].modularInfoulr);
+                        $("#modulardtnametext").val(data.data[0].modulardtnametext);
+                    }
+                })
+            }
+            $("#submit").click(function () {
+                var id = $("#id").val();
+                var BillID = $("#BillID").val();
+                var billTable = $("#billTable").val();
+                var islist = $("input[name='islist']:checked").val();
+                var modularInfoId = $("#modularInfoId").val();
+                var modularInfoname = $("#modularInfoname").val();
+                var modularInfoulr = $("#modularInfoulr").val();
+                var modulardtnametext = $("#modulardtnametext").val();
+                var json = {
+                    id: id,
+                    BillID: BillID,
+                    billTable: billTable,
+                    islist: islist,
+                    modularInfoId: modularInfoId,
+                    modularInfoname: modularInfoname,
+                    modularInfoulr: modularInfoulr,
+                    modulardtnametext: modulardtnametext
+                }
+                $.ajax({
+                    url: 'http://127.0.0.1:5001/api/Contor/BaseBillSave',
+                    type: 'post',
+                    data: json,
+                    xhrFields: { withCredentials: true },
+                    success: function (data) {
+                        if (data.isSuccess == true) {
+                            layer.msg('保存成功', {
+                                offset: '15px'
+                                , icon: 1
+                                , time: 1000
+                            }, function () {
+                                location.reload();
+                            });
+                        } else {
+                            layer.msg(data.msg, {
+                                offset: '15px'
+                            });
+                        }
+                    }
+
+                })
+            })
+        })
+
+    </script>
+</head>
+<body>
+    <form class="layui-form" method="post" action="">
+        <input type="hidden" id="id" value="@ViewData["id"]" />
+        <input type="hidden" id="Type" value="@ViewData["Type"]" />
+        <div class="layui-form-item layui-inline ">
+            <label class="layui-form-label">BillID</label>
+            <div class="layui-input-inline">
+                <input type="text" name="BillID" id="BillID" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label ">单据名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="modulardtnametext" id="modulardtnametext" lay-verify="required|identity" lay-reqtext="用户名是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">单据绑定表</label>
+                <div class="layui-input-inline">
+                    <input type="tel" id="modularInfoId" name="modularInfoId" lay-verify="required|phone" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">单据备注表</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="modularInfoname" name="modularInfoname" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">单据路径</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="modularInfoulr" name="modularInfoulr" lay-verify="required|number" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">单据表名</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="billTable" name="billTable" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+    
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否单据</label>
+            <div class="layui-input-block">
+                <input type="radio" name="islist" value="true" title="是" >
+                <input type="radio" name="islist" value="false" title="否">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" id="submit" class="layui-btn">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

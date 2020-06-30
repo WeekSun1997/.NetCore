@@ -1,0 +1,134 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SysDownListView</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.use('tree', function () {
+            var tree = layui.tree;
+            var $ = layui.jquery;
+            $.ajax({
+                url: 'http://127.0.0.1:5001/api/Employee/SysDropDown',
+                type: 'get',
+                xhrFields: { withCredentials: true },
+                dataType: "json",
+                success: function (data) {
+                    
+                    var datajson = [];
+                    $.each(data.data.table, function (i, e) {
+                        var chlidrenList = [];
+                        var id = e.billID;
+                        var json = { id: e.billID, title: e.reamsk, children: chlidrenList }
+                        $.each(data.data.table1, function (j, k) {
+                            if (id == k.billID) {
+                                var chlidrenJson = { title: k.value, id: k.id }
+                                chlidrenList.push(chlidrenJson);
+                            }
+                        })
+                        datajson.push(json)
+                    });
+
+                    tree.render({
+                        elem: '#test1'  //绑定元素
+                        , data: datajson
+                        , id: 'demoId'
+                        , edit: ['add', 'update', 'del']
+                        , operate: function (obj) {
+                            var type = obj.type; //得到操作类型：add、edit、del
+                            var data = obj.data; //得到当前节点的数据
+                            var elem = obj.elem; //得到当前节点元素
+                            var id = data.id; //得到节点索引
+                            console.info(data)
+                            if (type === 'add') {
+                                $.ajax({
+                                    url: 'http://127.0.0.1:5001/api/Employee/InsertDownList',
+                                    type: 'post',
+                                    data: { id: data.id },
+                                    xhrFields: { withCredentials: true },
+                                    dataType: "json",
+                                    success: function (data) {
+                                        if (data.isSuccess == true) {
+                                            location.reload();
+                                        } else {
+                                            alert(data.msg)
+                                        }
+                                       
+                                    }, error: function (data) {
+                                        console.info(data.responseJSON)
+                                        if (data.responseJSON.code == "401") {
+
+                                            window.parent.location.href = "http://127.0.0.1:44303/Login/Login"
+                                        } else {
+                                            alert(data.responseJSON.message)
+                                        }
+                                    }
+
+                                })
+                            }
+                            else if (type === 'update') { //修改节点
+                                var Name = elem.find('.layui-tree-txt').html();
+                                $.ajax({
+                                    url: 'http://127.0.0.1:5001/api/Employee/UpdateDownListName',
+                                    type: 'post',
+                                    data: { id: data.id, Name: Name },
+                                    xhrFields: { withCredentials: true },
+                                    dataType: "json",
+                                    success: function (data) {
+                                        console.log(elem.find('.layui-tree-txt').html()); //得到修改后的内容
+                                    },
+                                    error: function (data) {
+                                        if (data.code == "401") {
+                                            location.href = "/Login/Login"
+                                        }
+                                    }
+                                });
+
+                            } else if (type === 'del') { //删除节点
+                                $.ajax({
+                                    url: 'http://127.0.0.1:5001/api/Employee/DelDownList',
+                                    type: 'post',
+                                    data: { id: data.id },
+                                    xhrFields: { withCredentials: true },
+                                    dataType: "json",
+                                    success: function (data) {
+                                        location.reload();
+                                    }, error: function (data) {
+                                        console.info(data.responseJSON)
+                                        if (data.responseJSON.code == "401") {
+
+                                            window.parent.location.href = "http://127.0.0.1:44303/Login/Login"
+                                        } else {
+                                            alert(data.responseJSON.message)
+                                        }
+                                    }
+                                });
+                            };
+                        }
+                    });
+                },
+                error: function (data) {
+                    console.info(data.responseJSON)
+                    if (data.responseJSON.code == "401") {
+
+                        window.parent.location.href = "http://127.0.0.1:44303/Login/Login"
+                    } else {
+                        alert(data.responseJSON.message)
+                    }
+                }
+
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="test1"></div>
+</body>
+</html>

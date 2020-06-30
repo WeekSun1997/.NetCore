@@ -1,0 +1,149 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>InsertEmployee</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'table', 'laydate'], function () {
+            var table = layui.table;
+            var laydate = layui.laydate;
+            var $ = layui.jquery
+            var form = layui.form;
+            $.ajax({
+                url: 'http://127.0.0.1:5001/api/Employee/EmployeeList',
+                data: { IsOnLine: 'true' },
+                xhrFields: { withCredentials: true },
+                type: 'get',
+                datatype: 'json',
+                success: function (data) {
+                    console.info(data.data)
+                    var html = "";
+                    $.each(data.data, function (i, e) {
+                        $("#interest").append('<option value="' + e.userId + '">' + e.userName + '</option>')
+                    })
+                    form.render();
+                }
+            })
+            $.ajax({
+                url: 'http://127.0.0.1:5001/api/Employee/SysDropDown',
+                data: { BillID: "QJLX" },
+                xhrFields: { withCredentials: true },
+                type: 'get',
+                datatype: 'json',
+                success: function (data) {
+                    var html = "";
+                    $.each(data.data.table, function (i, e) {
+                        $("#LeaveReasons").append('<option value="' + e.id + '">' + e.value + '</option>')
+                    })
+                    form.render();
+                }
+            })
+            laydate.render({
+                elem: '#LeaveDate' //指定元素
+            });
+            laydate.render({
+                elem: '#Overtime' //指定元素
+            });
+
+            $("#submit").click(function () {
+                var UserName = $("#interest option:selected").text()
+                var UserId = $("#interest").val();
+                var LeaveDate = $("#LeaveDate").val();
+                var LeaveType = $("input[name='LeaveType']:checked").val();
+                var Overtime = $("#Overtime").val();
+                var LeaveReasons = $("#LeaveReasons").val();
+                var json = {
+                    UserId: UserId,
+                    UserName: UserName,
+                    LeaveDate: LeaveDate,
+                    LeaveType: LeaveType,
+                    Overtime: Overtime,
+                    LeaveReasons: LeaveReasons
+                }
+                $.ajax({
+                    url: 'http://127.0.0.1:5001/api/Employee/EmployeeLeaveInsert',
+                    data: json,
+                    xhrFields: { withCredentials: true },
+                    type: 'post',
+                    dateType: "json",
+                    success: function (data) {
+                        console.info(data.isSuccess)
+                        if (data.isSuccess == true) {
+                            layer.msg('保存成功', {
+                                offset: '15px'
+                                , icon: 1
+                                , time: 1000
+                            }, function () {
+                                location.reload();
+                            });
+                        } else {
+                            layer.msg(data.msg, {
+                                offset: '15px'
+                            });
+                        }
+                    }
+                })
+            })
+        });
+    </script>
+</head>
+<body>
+    <div style="margin:0px auto;">
+        <form class="layui-form" method="post" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">员工姓名</label>
+                <div class="layui-input-block">
+                    <select name="interest" id="interest" lay-filter="yuangong">
+                        <option value="-1">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">请假日期</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="LeaveDate" name="LeaveDate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否调休</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="LeaveType" value="true" title="调休" checked="">
+                    <input type="radio" name="LeaveType" value="false" title="请假">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">请假事由</label>
+                <div class="layui-input-block">
+                    <select name="LeaveReasons" id="LeaveReasons" lay-filter="yuangong">
+                        <option value="-1">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">调休日期</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="Overtime" name="Overtime" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" id="submit" class="layui-btn">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

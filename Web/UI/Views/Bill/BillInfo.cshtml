@@ -1,0 +1,92 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BillInfo</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'table'], function () {
+            var table = layui.table;
+            var $ = layui.jquery;
+            table.render({
+                elem: '#tab'
+                , height: 500
+                , url: 'http://127.0.0.1:5001/api/Contor/BaseInfo' //数据接口
+                , page: true //开启分页
+                , cols: [[
+                    { field: 'billId', title: 'BillId', sort: true, fixed: 'left' },
+                    { field: 'modularInfoId', title: '单据绑定表', sort: true, fixed: 'left' },
+                    { field: 'modularInfoname', title: '单据备注', sort: true, fixed: 'left' },
+                    { field: 'modularInfoulr', title: '单据路径', sort: true, fixed: 'left' },
+                    { field: 'modulardtnametext', title: '单据名称', sort: true, fixed: 'left' },
+                    { field: 'billTable', title: '单据表名', sort: true, fixed: 'left' },
+                    { field: 'islist', title: '是否单据', sort: true, fixed: 'left' },
+                    { field: 'id', title: '操作', toolbar: '#barDemo', width: 150 }
+                ]]
+                , toolbar: '#toolbarDemo'
+                , parseData: function (res) { //res 即为原始返回的数据
+                    console.info(res);
+                    return {
+                        "code": res.isSuccess == true ? 0 : 500, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "data": res.data //
+                    };
+                }
+            })
+            table.on('tool(tab)', function (obj) {
+                var data = obj.data;
+                //console.log(obj)
+                console.info(obj)
+                if (obj.event === 'edit') {
+                    layer.open({
+                        type: 2 //此处以iframe举例
+                        , title: '创建新表'
+                        , area: ['400px', '600px']
+                        , shade: 0
+                        , maxmin: true
+                        , content: '/Bill/BillView/?id=' + data.id
+                    })
+                } else {
+                    layer.open({
+                        type: 2 //此处以iframe举例
+                        , title: '创建新表'
+                        , area: ['800px', '620px']
+                        , shade: 0
+                        , maxmin: true
+                        , content: '/Bill/BillRemask/?TableName=' + data.modularInfoId
+                    })
+                }
+            })
+            $("#AddTable").click(function () {
+                layer.open({
+                    type: 2 //此处以iframe举例
+                    , title: '创建新表'
+                    , area: ['400px', '600px']
+                    , shade: 0
+                    , maxmin: true
+                    , content: '/Bill/BillView/?Type=Add'
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <table id="tab" lay-filter="tab"></table>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" id="AddTable" lay-event="getCheckData">新增单据</button>
+        </div>
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="beizhu">备注</a>
+    </script>
+</body>
+</html>

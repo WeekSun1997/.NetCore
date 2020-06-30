@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>API</name>
+    </assembly>
+    <members>
+        <member name="M:API.Controllers.ContorController.LoadTableCloums(System.String)">
+            <summary>
+            加载表的名称
+            </summary>
+            <param name="tableName">表名</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ContorController.DelTable(System.String)">
+            <summary>
+            删除表
+            </summary>
+            <param name="tableName">表名</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ContorController.ExceSql(System.String,System.String)">
+            <summary>
+            /
+            </summary>
+            <param name="Sql"></param>
+            <param name="SqlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ContorController.BaseTable(System.String,System.String)">
+            <summary>
+            Table模板
+            </summary>
+            
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ContorController.BaseTableDel(System.String,System.Int32)">
+            <summary>
+            删除单据
+            </summary>
+            <param name="BillNo">单据No</param>
+            <param name="BillID">单据id</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ContorController.BaseFrom(System.String,System.String)">
+            <summary>
+            表单模板
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ContorController.BaseSave(System.String,System.String)">
+            <summary>
+            单据保存
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ContorController.BaseInfo(System.Int32)">
+            <summary>
+            单据列表信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ContorController.BaseBillSave(MysqlEntity.Core.Model.Billmodularinfo)">
+            <summary>
+            保存单据信息
+            </summary>
+            <param name="billmodularinfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ContorController.BaseRemask(System.String)">
+            <summary>
+            表备注
+            </summary>
+            <param name="TableName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ContorController.BaseRemaskSave(System.String,System.String)">
+            <summary>
+            保存备注表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ContorController.BaseSearch(System.String)">
+            <summary>
+            单据ID
+            </summary>
+            <param name="BillNo"></param>
+            <returns></returns>
+        </member>
+        <member name="F:API.Controllers.EmployeeController.dBServices">
+            <summary>
+            数据库接口
+            </summary>
+        </member>
+        <member name="F:API.Controllers.EmployeeController.cache">
+            <summary>
+            缓存接口
+            </summary>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.#ctor(Interface.IDBServices,Interface.ICache,Interface.IEmployee)">
+            <summary>
+            
+            </summary>
+            <param name="_dBServices">数据库服务</param>
+            <param name="_cache">Redis服务</param>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.EmployeeList(System.String)">
+            <summary>
+            员工列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.SaveEmployee(MysqlEntity.Core.Model.Employee)">
+            <summary>
+            保存修改员工信息
+            </summary>
+            <param name="employee"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.DelEmployee(System.Int32)">
+            <summary>
+            删除员工信息
+            </summary>
+            <param name="EmpID">员工ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.EmployeeDetail(System.Int32)">
+             <summary>
+            获取员工详细信息
+             </summary>
+             <param name="EmpId">员工ID</param>
+             <returns></returns>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.EmployeeLeave">
+            <summary>
+            请假列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.SysDropDown(System.String)">
+            <summary>
+            根据名称获取下拉
+            </summary>
+            <param name="DownName">下拉名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.EmployeeLeaveInsert(MysqlEntity.Core.Model.Employeeleave)">
+            <summary>
+            添加员工请假信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.DelLeave(System.Int32)">
+            <summary>
+            删除
+            </summary>
+            <param name="BillID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.Employeepayslip(MysqlEntity.Core.Model.Employeepayslip)">
+            <summary>
+            员工工资条
+            </summary>
+            <param name="employeepayslip"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.payslipList">
+            <summary>
+            工资条列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.DelPayslip(System.Int32)">
+            <summary>
+            删除工资单
+            </summary>
+            <param name="BillID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.UpdateDownListName(System.Int32,System.String)">
+            <summary>
+            修改下拉名称
+            </summary>
+            <param name="id">下拉ID</param>
+            <param name="Name">新下拉名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.DelDownList(System.Int32)">
+            <summary>
+            删除下拉
+            </summary>
+            <param name="id">下拉ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.EmployeeController.InsertDownList(System.Int32)">
+            <summary>
+            添加下拉
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.LoginController.Login(System.String,System.String)">
+            <summary>
+            用户登录方法
+            </summary>
+            <param name="UserName">用户名</param>
+            <param name="Password">密码</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.LoginController.Register(System.String)">
+            <summary>
+            用户注册
+            </summary>
+            <param name="UserName">用户名</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.MainController.GetFriendList">
+            <summary>
+            好友列表
+            </summary>     
+            <returns>好友List</returns>
+        </member>
+        <member name="M:API.Controllers.MainController.LoadSysList">
+            <summary>
+            加载模块列表
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

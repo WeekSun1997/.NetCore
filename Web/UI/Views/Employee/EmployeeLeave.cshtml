@@ -1,0 +1,121 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EmployeeHt</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'table'], function () {
+            var table = layui.table;
+            var $ = layui.jquery;
+            table.render({
+                elem: '#tabs'
+                , height: 500
+                , url: 'http://127.0.0.1:5001/api/Employee/EmployeeLeave' //数据接口
+                , page: true //开启分页
+                , toolbar: '#toolbarDemo'
+                , cols: [[
+                    { field: 'userName', title: '姓名', sort: true, fixed: 'left' },
+                    { field: 'leaveDate', title: '请假日期', sort: true, fixed: 'left' },
+                    {
+                        field: 'leaveType', title: '是否调休', sort: true, fixed: 'left', templet: function (d) {
+                            var online = "";
+                            if (d.employeeType == 1) {
+                                online = "checked='true'"
+                            }
+                            return '<input type="checkbox" name="employeeType" lay-skin="switch" lay-text="调休|请假" ' + online + ''
+                        }
+                    },
+                    {
+                        field: 'leaveReasons', title: '请假事由', sort: true, fixed: 'left',templet: function(d) {
+                            var statc = "";
+                            console.info(d.leaveReasons)
+                            switch (d.leaveReasons) {
+                                case 1:
+                                    statc = "病假"
+                                    break;
+                                case 2:
+                                    statc = "事假";
+                                    break;
+                                case 3:
+                                    statc = "其他";
+                                    break;
+                                case 4:
+                                    statc = "调休";
+                                    break;
+                                default:
+                                    statc = 0;
+                                    break;
+                                   
+                            }
+                            return '<a>' + statc + '</a>'
+                        }
+                    },
+                    { field: 'Overtime', title: '调休日期', sort: true, fixed: 'left' },
+                    { fixed: 'billId', title: '操作', toolbar: '#barDemo', width: 150 }
+                ]]
+                , parseData: function (res) { //res 即为原始返回的数据
+                    console.info(res.data)
+                    return {
+                        "code": res.isSuccess == true ? 0 : 500, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "data": res.data //
+                        
+                    };
+                }
+            })
+            $("#AddEmployee").click(function () {
+                layer.open({
+                    type: 2 //此处以iframe举例
+                    , title: '创建新表'
+                    , area: ['400px', '600px']
+                    , shade: 0
+                    , maxmin: true
+                    , content: '/Employee/InsertLeave'
+                })
+
+            })
+            table.on('tool(tabs)', function (obj) {
+                var data = obj.data;
+                //console.log(obj)
+                console.info(obj)
+                if (obj.event === 'del') {
+                    layer.confirm('真的删除行么', function (index) {
+                        $.ajax({
+                            url: "http://127.0.0.1:5001/api/Employee/DelLeave",
+                            data: { BillID: obj.data.billId },
+                            xhrFields: { withCredentials: true },
+                            type: 'post',
+                            success: function (data) {
+                                console.info(data)
+                                if (data.isSuccess == true) {
+                                    obj.del();
+                                    layer.close(index);
+                                }
+                            }
+                        })
+                    });
+                } 
+            })
+        })
+    </script>
+</head>
+<body>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" id="AddEmployee" lay-event="getCheckData">新增请假</button>
+        </div>
+    </script>
+    <table id="tabs" lay-filter="tabs"></table>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+</body>
+</html>

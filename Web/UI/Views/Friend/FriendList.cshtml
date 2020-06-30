@@ -1,0 +1,103 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>FriendList</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        var $;
+        layui.use(['form', 'table'], function () {
+            var table = layui.table;
+            $= layui.jquery;
+            $.ajax({
+                url: 'http://127.0.0.1:5001/api/Main/GetFriendList',
+                type: 'get',
+                xhrFields: { withCredentials: true },
+                datatype: 'json',
+                success: function (data) {
+                    console.info(data)
+                    $.each(data.data, function (i, e) {
+                        console.info(e)
+                        $("#FriendList").append('<li class="layui-nav-item" name="' + e.userName + '" onclick="openPlane(this)" id="' + e.userId + '"><a>' + e.userName + '</a></li>')
+                    })
+                }
+            })
+        })
+        function openPlane(obj) {
+            var name = $(obj).attr("name")
+            var Id = $(obj).attr("id")
+            layer.open({
+                type: 1
+                , title: "<b style='color:red'>" + name + "</b>"
+                , offset: 'auto'
+                , area: ["500px", "455px"]//具体配置参考：
+                , id: 'layerDemo' + Id  //防止重复弹出
+                , content: '<div style="width:500px;height:400px;"><hr class="layui-bg-orange">' +
+                    '<div style="height:250px;min-height:250px;width:99%;" id=Msg_' + Id + '></div>' +
+                    '<div class=""><textarea id="text_' + Id + '" placeholder="请输入内容" style="width:100%;border-top:2px solid blue" class= "layui-textarea" ></textarea></div>' +
+                    '<div><button type="button" class="layui-btn layui-btn-fluid" Rid=' + Id + ' onClick="Send(' + Id + ')">发送(ENTER)</button></div></div> '
+                , shade: 0 //不显示遮罩
+                , yes: function () {
+                    layer.closeAll();
+                }
+            });
+        }
+
+        var wsUri = "ws:" + "//127.0.0.1:5001/ws/";
+        console.info(wsUri)
+        var socket = new WebSocket(wsUri);
+        socket.onopen = e => {
+            console.log("socket opened", e);
+        };
+        socket.onclose = function (e) {
+            console.log("socket closed", e);
+        };
+        //function to recieve from server.
+        socket.onmessage = function (e) {
+            console.log("Message:" + e.data);
+            var dataArray = String(e.data).split("id_]]");
+            var name = dataArray[0];
+            var msgid = dataArray[1];
+            var sendId = dataArray[2];
+            var msg = dataArray[3];
+            console.info(sendId)
+            if ($("#Msg_" + msgid).length == 0 && $("#Msg_" + sendId).length == 0) {
+                var dom = $("#" + sendId);
+                openPlane(dom)
+            }
+            $('#Msg_' + ($("#Msg_" + msgid).length > 0 ? msgid : sendId)).append(name + ":" + msg + '<br />');
+
+
+        };
+        socket.onerror = function (e) {
+            console.error(e.data);
+        };
+        function Send(id) {
+            console.info(id)
+            var message = $("#text_" + id).val()
+            if (message == "") {
+                return
+            }
+            var msgObj = {
+                ReceiverID: id,
+                MessageType: "text",
+                Content: message
+            };
+            console.info(msgObj)
+            socket.send(JSON.stringify(msgObj));
+            $("#text_" + id).val('');
+        }
+    </script>
+</head>
+<body>
+    <ul class="layui-nav layui-nav-tree" lay-filter="test" id="FriendList">
+    </ul>
+</body>
+</html>

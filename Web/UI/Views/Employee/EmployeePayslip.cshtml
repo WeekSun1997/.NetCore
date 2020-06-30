@@ -1,0 +1,162 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>InsertEmployee</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'table', 'laydate'], function () {
+            var table = layui.table;
+            var laydate = layui.laydate;
+            var $ = layui.jquery
+            var form = layui.form; 
+            laydate.render({
+                elem: '#PayDate' //指定元素
+            });
+            $.ajax({
+                url: 'http://127.0.0.1:5001/api/Employee/EmployeeList',
+                data: { IsOnLine: 'true' },
+                type: 'get',
+                xhrFields: { withCredentials: true },
+                datatype: 'json',
+                success: function (data) {
+                    console.info(data.data)
+                    var html = "";
+                    $.each(data.data, function (i, e) {
+                        $("#userID").append('<option value="' + e.userId + '">' + e.userName + '</option>')
+                    })
+                    form.render();
+                }
+            })
+            $("#submit").click(function () {
+                var PayDate = $("#PayDate").val();
+                var userID = $("#userID").val();
+                var BasePay = $("#BasePay").val();
+                var Subsidy = $("#Subsidy").val();
+                var Reward = $("#Reward").val();
+                var Other = $("#Other").val();
+                var WagesPayable = $("#WagesPayable").val();
+                var Deduction = $("#Deduction").val();
+                var Netsalary = $("#Netsalary").val();
+                var Remarks = $("#Remarks").val();
+                var json = {
+                    PayDate: PayDate,
+                    userID: userID,
+                    BasePay: BasePay,
+                    Subsidy: Subsidy,
+                    Reward: Reward,
+                    Other: Other,
+                    WagesPayable: WagesPayable,
+                    Deduction: Deduction,
+                    Netsalary: Netsalary,
+                    Remarks: Remarks
+                }
+                $.ajax({
+                    url: 'http://127.0.0.1:5001/api/Employee/Employeepayslip',
+                    data: json,
+                    type: 'post',
+                    xhrFields: { withCredentials: true },
+                    datatype: 'json',
+                    success: function (data) {
+                        console.info(data.isSuccess)
+                        if (data.isSuccess == true) {
+                            layer.msg('保存成功', {
+                                offset: '15px'
+                                , icon: 1
+                                , time: 1000
+                            }, function () {
+                                location.reload();
+                            });
+                        } else {
+                            layer.msg(data.msg, {
+                                offset: '15px'
+                            });
+                        }
+                    }
+                })
+            })
+        });
+    </script>
+</head>
+<body>
+    <div style="margin:0px auto;">
+        <div class="layui-form-item layui-inline ">
+            <label class="layui-form-label">日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="PayDate" id="PayDate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <form class="layui-form" method="post" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">员工姓名</label>
+                <div class="layui-input-block">
+                    <select name="userID" id="userID" lay-filter="yuangong">
+                        <option value="-1">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item layui-inline ">
+                <label class="layui-form-label">基本工资</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="BasePay" id="BasePay" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-inline ">
+                <label class="layui-form-label">各项补助</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="Subsidy" id="Subsidy" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-inline ">
+                <label class="layui-form-label">奖励工资</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="Reward" id="Reward" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-inline ">
+                <label class="layui-form-label">其他奖励</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="Other" id="Other" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-inline ">
+                <label class="layui-form-label">应发工资</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="WagesPayable" id="WagesPayable" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label">扣款项</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="Deduction" id="Deduction" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-inline ">
+                <label class="layui-form-label">实发工资</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="Netsalary" id="Netsalary" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-inline ">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="Remarks" id="Remarks" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" id="submit" class="layui-btn">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

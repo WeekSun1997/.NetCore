@@ -1,0 +1,127 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EmployeeList</title>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'table'], function () {
+            var table = layui.table;
+            var $ = layui.jquery;
+            table.render({
+                elem: '#tab'
+                , height: 500
+                , url: 'http://127.0.0.1:5001/api/Employee/EmployeeList' //数据接口
+                , page: true //开启分页
+                , toolbar: '#toolbarDemo'
+                , cols: [[
+                    { field: 'userName', title: '姓名', sort: true, fixed: 'left' },
+                    { field: 'phone', title: '手机号', sort: true, fixed: 'left' },
+                    { field: 'entryDate', title: '入职日期', sort: true, fixed: 'left' },
+                    {
+                        field: 'isOnLine', title: '在职', sort: true, fixed: 'left', templet: function (d) {
+                            var online = "";
+                            console.info(d.isOnLine)
+                            if (d.isOnLine == true) {
+                                online = "checked='true'"
+                            }
+                            return '<input type="checkbox" name="isOnLine" lay-skin="switch" lay-text="在职|离职" ' + online + ''
+                        }
+                    },
+                    {
+                        field: 'employeeType', title: '员工类型', sort: true, fixed: 'left', templet: function (d) {
+                            var online = "";
+                            console.info(d.employeeType)
+                            if (d.employeeType == true) {
+                                online = "checked='true'"
+                            }
+                            return '<input type="checkbox" name="employeeType" lay-skin="switch" lay-text="长期|兼职" ' + online + ''
+                        }
+                    },
+                    { fixed: 'billId', title: '操作', toolbar: '#barDemo', width: 150 }
+                ]]
+                , parseData: function (res) { //res 即为原始返回的数据
+                    return {
+                        "code": res.isSuccess == true ? 0 : 500, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "data": res.data //
+                    };
+                }
+            })
+            table.on('tool(tab)', function (obj) {
+                var data = obj.data;
+                //console.log(obj)
+                console.info(obj)
+                if (obj.event === 'del') {
+                    layer.confirm('真的删除行么', function (index) {
+                        $.ajax({
+                            url: "http://127.0.0.1:5001/api/Employee/DelEmployee",
+                            data: { EmpId: obj.data.billId },
+                            xhrFields: { withCredentials: true },
+                            type: 'post',
+                            success: function (data) {
+                                console.info(data)
+                                if (data.isSuccess == true) {
+                                    obj.del();
+                                    layer.close(index);
+                                }
+                            }
+                        })
+                    });
+                } else if (obj.event === 'edit') {
+                    layer.open({
+                        type: 2 //此处以iframe举例
+                        , title: '创建新表'
+                        , area: ['400px', '600px']
+                        , shade: 0
+                        , maxmin: true
+                        , content: '/Employee/InsertEmployee/?EmpId=' + obj.data.billId
+                    })
+                } else {
+                    layer.open({
+                        type: 2 //此处以iframe举例
+                        , title: '创建新表'
+                        , area: ['400px', '600px']
+                        , shade: 0
+                        , maxmin: true
+                        , content: '/Employee/InsertEmployee/?EmpId=' + obj.data.billId
+                    })
+                }
+            })
+            $("#AddEmployee").click(function () {
+                layer.open({
+                    type: 2 //此处以iframe举例
+                    , title: '创建新表'
+                    , area: ['400px', '600px']
+                    , shade: 0
+                    , maxmin: true
+                    , content: '/Employee/InsertEmployee'
+                })
+
+            })
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" id="AddEmployee" lay-event="getCheckData">新增员工</button>
+            </div>
+        </script>
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+        <table id="tab" lay-filter="tab"></table>
+    </div>
+</body>
+</html>
