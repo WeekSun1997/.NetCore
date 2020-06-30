@@ -1,0 +1,11 @@
+G:\Program Files (x86)\Web\WebUI\ConsoleApp1\bin\Debug\netcoreapp2.2\ConsoleApp1.deps.json
+G:\Program Files (x86)\Web\WebUI\ConsoleApp1\bin\Debug\netcoreapp2.2\ConsoleApp1.runtimeconfig.json
+G:\Program Files (x86)\Web\WebUI\ConsoleApp1\bin\Debug\netcoreapp2.2\ConsoleApp1.runtimeconfig.dev.json
+G:\Program Files (x86)\Web\WebUI\ConsoleApp1\bin\Debug\netcoreapp2.2\ConsoleApp1.dll
+G:\Program Files (x86)\Web\WebUI\ConsoleApp1\bin\Debug\netcoreapp2.2\ConsoleApp1.pdb
+G:\Program Files (x86)\Web\WebUI\ConsoleApp1\obj\Debug\netcoreapp2.2\ConsoleApp1.csprojAssemblyReference.cache
+G:\Program Files (x86)\Web\WebUI\ConsoleApp1\obj\Debug\netcoreapp2.2\ConsoleApp1.csproj.CoreCompileInputs.cache
+G:\Program Files (x86)\Web\WebUI\ConsoleApp1\obj\Debug\netcoreapp2.2\ConsoleApp1.AssemblyInfoInputs.cache
+G:\Program Files (x86)\Web\WebUI\ConsoleApp1\obj\Debug\netcoreapp2.2\ConsoleApp1.AssemblyInfo.cs
+G:\Program Files (x86)\Web\WebUI\ConsoleApp1\obj\Debug\netcoreapp2.2\ConsoleApp1.dll
+G:\Program Files (x86)\Web\WebUI\ConsoleApp1\obj\Debug\netcoreapp2.2\ConsoleApp1.pdb
