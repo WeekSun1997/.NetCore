@@ -10,5 +10,10 @@ namespace MysqlEntity.Core.Model
         public int? Age { get; set; }
         public string Phone { get; set; }
         public int? Sex { get; set; }
+        public DateTime? PreDate { get; set; }
+        public string Project { get; set; }
+        public int? Channel { get; set; }
+        public int? Statc { get; set; }
+        public string Remask { get; set; }
     }
 }

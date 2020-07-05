@@ -13,5 +13,6 @@ namespace MysqlEntity.Core.Model
         public string ModularInfoulr { get; set; }
         public string BillTable { get; set; }
         public bool? Islist { get; set; }
+        public string IsShow { get; set; }
     }
 }

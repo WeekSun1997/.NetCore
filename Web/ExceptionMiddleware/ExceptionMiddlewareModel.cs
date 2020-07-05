@@ -66,7 +66,7 @@ namespace ExceptionMiddleware
                     MongoDBServer mb = new MongoDBServer();
                     ExceptionLog log = new ExceptionLog()
                     {
-                        UserID = User.UserId,
+                        UserID = User.BillId,
                         UserName = User.UserName,
                         ExceptionMsg = e.Message,
                         ExceptionDetail = error,

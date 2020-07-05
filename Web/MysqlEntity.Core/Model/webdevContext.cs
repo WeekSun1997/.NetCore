@@ -32,6 +32,8 @@ namespace MysqlEntity.Core.Model
         public virtual DbSet<Sysuser> Sysuser { get; set; }
         public virtual DbSet<Vipamount> Vipamount { get; set; }
         public virtual DbSet<Vippre> Vippre { get; set; }
+        public virtual DbSet<Viptransaction> Viptransaction { get; set; }
+        public virtual DbSet<Vipvisit> Vipvisit { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -92,6 +94,8 @@ namespace MysqlEntity.Core.Model
                     .HasColumnName("ID")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.IsShow).HasColumnType("varchar(255)");
+
                 entity.Property(e => e.Modularid).HasColumnType("varchar(255)");
 
                 entity.Property(e => e.Modularname).HasColumnType("varchar(255)");
@@ -112,6 +116,8 @@ namespace MysqlEntity.Core.Model
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.BillTable).HasColumnType("varchar(45)");
+
+                entity.Property(e => e.IsShow).HasColumnType("varchar(255)");
 
                 entity.Property(e => e.Islist)
                     .HasColumnName("ISList")
@@ -219,9 +225,19 @@ namespace MysqlEntity.Core.Model
 
                 entity.Property(e => e.Age).HasColumnType("int(11)");
 
+                entity.Property(e => e.Channel).HasColumnType("int(11)");
+
                 entity.Property(e => e.Phone).HasColumnType("varchar(45)");
 
+                entity.Property(e => e.PreDate).HasColumnType("date");
+
+                entity.Property(e => e.Project).HasColumnType("varchar(255)");
+
+                entity.Property(e => e.Remask).HasColumnType("varchar(500)");
+
                 entity.Property(e => e.Sex).HasColumnType("int(11)");
+
+                entity.Property(e => e.Statc).HasColumnType("int(11)");
 
                 entity.Property(e => e.VipName).HasColumnType("varchar(45)");
             });
@@ -404,12 +420,14 @@ namespace MysqlEntity.Core.Model
 
             modelBuilder.Entity<Sysuser>(entity =>
             {
-                entity.HasKey(e => e.UserId)
+                entity.HasKey(e => e.BillId)
                     .HasName("PRIMARY");
 
                 entity.ToTable("sysuser");
 
-                entity.Property(e => e.UserId).HasColumnType("int(10)");
+                entity.Property(e => e.BillId)
+                    .HasColumnName("BillID")
+                    .HasColumnType("int(10)");
 
                 entity.Property(e => e.PassWrod).HasColumnType("varchar(255)");
 
@@ -465,9 +483,63 @@ namespace MysqlEntity.Core.Model
 
                 entity.Property(e => e.Remask).HasColumnType("varchar(200)");
 
-                entity.Property(e => e.Statc).HasColumnType("int(11)");
+                entity.Property(e => e.Sex).HasColumnType("int(11)");
+
+                entity.Property(e => e.VipName).HasColumnType("varchar(255)");
 
                 entity.Property(e => e.VipPhone).HasColumnType("varchar(20)");
+            });
+
+            modelBuilder.Entity<Viptransaction>(entity =>
+            {
+                entity.HasKey(e => e.BillId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("viptransaction");
+
+                entity.Property(e => e.BillId)
+                    .HasColumnName("BillID")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Amount).HasColumnType("decimal(18,2)");
+
+                entity.Property(e => e.Channel).HasColumnType("int(255)");
+
+                entity.Property(e => e.CreateTime).HasColumnType("date");
+
+                entity.Property(e => e.Phone)
+                    .IsRequired()
+                    .HasColumnType("varchar(255)");
+
+                entity.Property(e => e.Project).HasColumnType("varchar(255)");
+
+                entity.Property(e => e.Remask).HasColumnType("varchar(500)");
+
+                entity.Property(e => e.Stuts).HasColumnType("int(255)");
+
+                entity.Property(e => e.TransactionType).HasColumnType("int(255)");
+
+                entity.Property(e => e.VipName).HasColumnType("varchar(255)");
+            });
+
+            modelBuilder.Entity<Vipvisit>(entity =>
+            {
+                entity.HasKey(e => e.BillId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("vipvisit");
+
+                entity.Property(e => e.BillId)
+                    .HasColumnName("BillID")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Remask).HasColumnType("varchar(500)");
+
+                entity.Property(e => e.VipName).HasColumnType("varchar(255)");
+
+                entity.Property(e => e.VipPhone).HasColumnType("varchar(255)");
+
+                entity.Property(e => e.VisitDate).HasColumnType("date");
             });
         }
     }

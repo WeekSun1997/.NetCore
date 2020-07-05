@@ -274,7 +274,7 @@ namespace API.Controllers
             string sql = $"select * from BillModularInfo where id={BillNo}";
             DataTable dt = dBServices.QueryTable(sql).Result;
             string TableName = dt.Rows[0]["ModularInfoName"].ToString();
-            sql = $@" select * from BillTableRemask where BillTableName='{TableName}'; 
+            sql = $@" select * from BillTableRemask where BillTableName='{TableName}' order by tableindex; 
                                  select * from {TableName} where 1=1";
             if (!string.IsNullOrEmpty(SearchStr))
             {
@@ -293,8 +293,11 @@ namespace API.Controllers
                     Ds.Tables[1].Columns[Name + "_Temp"].DataType = typeof(string);
                     foreach (DataRow cell in Ds.Tables[1].Rows)
                     {
-                        DataRow[] dr = Ds.Tables[2].Select($"id={cell[Name]}");
-                        cell[Name + "_Temp"] = dr[0][2];
+                        if (!string.IsNullOrEmpty(cell[Name]?.ToString()))
+                        {
+                            DataRow[] dr = Ds.Tables[2].Select($"id={cell[Name]}");
+                            cell[Name + "_Temp"] = dr[0][2];
+                        }
                     }
                     Ds.Tables[1].Columns.Remove(Name);
                     Ds.Tables[1].Columns[Name + "_Temp"].ColumnName = Name;
@@ -302,7 +305,14 @@ namespace API.Controllers
 
             }
             Ds.Tables.Remove(Ds.Tables[2]);
-            return Json(new { IsSuccess = true, msg = msg, data = Ds });
+            Byte[] UserByte = HttpContext.Session.Get("user");
+            int UserId = Library.Other.SerializeToObject<Sysuser>(UserByte).BillId;
+            bool IsShow = true;
+            if (UserId != 4)
+            {
+                IsShow = false;
+            }
+            return Json(new { IsSuccess = true, msg = msg, data = Ds, IsShow = IsShow });
         }
         /// <summary>
         /// 删除单据
@@ -471,11 +481,9 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-
                 return Json(new { msg = ex.Message, IsSuccess = false });
             }
         }
-
         /// <summary>
         /// 单据列表信息
         /// </summary>
@@ -616,7 +624,6 @@ namespace API.Controllers
             }
 
         }
-
         /// <summary>
         /// 单据ID
         /// </summary>

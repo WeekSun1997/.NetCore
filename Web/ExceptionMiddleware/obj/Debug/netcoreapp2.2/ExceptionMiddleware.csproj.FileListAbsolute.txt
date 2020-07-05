@@ -7,7 +7,6 @@ G:\Program Files (x86)\Web\Web\ExceptionMiddleware\bin\Debug\netcoreapp2.2\Libra
 G:\Program Files (x86)\Web\Web\ExceptionMiddleware\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Hosting.Abstractions.xml
 G:\Program Files (x86)\Web\Web\ExceptionMiddleware\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Http.Abstractions.xml
 G:\Program Files (x86)\Web\Web\ExceptionMiddleware\obj\Debug\netcoreapp2.2\ExceptionMiddleware.csprojAssemblyReference.cache
-G:\Program Files (x86)\Web\Web\ExceptionMiddleware\obj\Debug\netcoreapp2.2\ExceptionMiddleware.csproj.CoreCompileInputs.cache
 G:\Program Files (x86)\Web\Web\ExceptionMiddleware\obj\Debug\netcoreapp2.2\ExceptionMiddleware.AssemblyInfoInputs.cache
 G:\Program Files (x86)\Web\Web\ExceptionMiddleware\obj\Debug\netcoreapp2.2\ExceptionMiddleware.AssemblyInfo.cs
 G:\Program Files (x86)\Web\Web\ExceptionMiddleware\obj\Debug\netcoreapp2.2\ExceptionMiddleware.csproj.CopyComplete
@@ -18,3 +17,4 @@ G:\Program Files (x86)\Web\Web\ExceptionMiddleware\bin\Debug\netcoreapp2.2\Mongo
 G:\Program Files (x86)\Web\Web\ExceptionMiddleware\bin\Debug\netcoreapp2.2\MysqlEntity.Core.dll
 G:\Program Files (x86)\Web\Web\ExceptionMiddleware\bin\Debug\netcoreapp2.2\MongoDB.pdb
 G:\Program Files (x86)\Web\Web\ExceptionMiddleware\bin\Debug\netcoreapp2.2\MysqlEntity.Core.pdb
+G:\Program Files (x86)\Web\Web\ExceptionMiddleware\obj\Debug\netcoreapp2.2\ExceptionMiddleware.csproj.CoreCompileInputs.cache

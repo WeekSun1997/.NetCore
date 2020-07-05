@@ -38,7 +38,7 @@ namespace WebSocketMagger
                 _wSConnectionManager.AddSocket(currentWebSocket, httpContext);
                 httpContext.Session.TryGetValue("user", out byte[] user);
                 var sysuser = Library.Other.SerializeToObject<Sysuser>(user);
-                var SenderID = sysuser.UserId;
+                var SenderID = sysuser.BillId;
                 var SenderName = "";
                 try
                 {
@@ -51,7 +51,7 @@ namespace WebSocketMagger
                             item.IsSuccess = 1;
                             db.Message.Update(item);
                             db.SaveChanges();
-                            SenderName = db.Sysuser.Where(a => a.UserId == item.SendUserId).Select(a => a.UserName).FirstOrDefault();
+                            SenderName = db.Sysuser.Where(a => a.BillId == item.SendUserId).Select(a => a.UserName).FirstOrDefault();
                             string msgs = SenderName + "id_]]" + item.ReceiveUserId + "id_]]" + item.SendUserId + "id_]]" + item.MsgBody;
                             await _wsHanlder.SendMessageAsync(web, msgs, cancellationToken);
                         }
@@ -71,7 +71,7 @@ namespace WebSocketMagger
                     string Errmsg = "";
                     httpContext.Session.TryGetValue("user", out user);
                     sysuser = Library.Other.SerializeToObject<Sysuser>(user);
-                    SenderID = sysuser.UserId;
+                    SenderID = sysuser.BillId;
                     SenderName = sysuser.UserName;
                     var mes = new MysqlEntity.Core.Model.Message()
                     {

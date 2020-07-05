@@ -9,5 +9,6 @@ namespace MysqlEntity.Core.Model
         public string Modularnametext { get; set; }
         public string Modularid { get; set; }
         public string Modularname { get; set; }
+        public string IsShow { get; set; }
     }
 }

@@ -4,6 +4,22 @@
         <name>API</name>
     </assembly>
     <members>
+        <member name="M:API.Controllers.BillQueryController.Query">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:API.Controllers.BillQueryController.Vip(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="BeginDate"></param>
+            <param name="EndDate"></param>
+            <param name="Channel"></param>
+            <param name="Stuts"></param>
+            <param name="Group"></param>
+            <returns></returns>
+        </member>
         <member name="M:API.Controllers.ContorController.LoadTableCloums(System.String)">
             <summary>
             加载表的名称

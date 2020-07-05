@@ -124,7 +124,7 @@
 
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body">
-
+               
             </div>
 
             <!-- 辅助元素，一般用于移动设备下遮罩 -->
@@ -165,6 +165,15 @@
                     //$.each(data.data, function (i, e) {
                     //    $("#TableList").append('<dd data-name="console"><a onClick="openPlane(this)" name="' + e.tablE_NAME + '" id="' + e.tablE_NAME + '" href="javascript:;">' + e.tablE_NAME + '</a></dd>')
                     //})
+                },
+                error: function (data) {
+                    console.info(data.responseJSON)
+                    if (data.responseJSON.code == "401") {
+
+                        window.parent.location.href = "http://127.0.0.1:44303/Login/Login"
+                    } else {
+                        alert(data.responseJSON.message)
+                    }
                 }
             })
         })

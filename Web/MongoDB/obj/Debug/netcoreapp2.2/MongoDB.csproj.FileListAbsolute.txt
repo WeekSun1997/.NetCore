@@ -1,9 +1,9 @@
 G:\Program Files (x86)\Web\Web\MongoDB\bin\Debug\netcoreapp2.2\MongoDB.deps.json
 G:\Program Files (x86)\Web\Web\MongoDB\bin\Debug\netcoreapp2.2\MongoDB.dll
-G:\Program Files (x86)\Web\Web\MongoDB\obj\Debug\netcoreapp2.2\MongoDB.csproj.CoreCompileInputs.cache
 G:\Program Files (x86)\Web\Web\MongoDB\obj\Debug\netcoreapp2.2\MongoDB.AssemblyInfoInputs.cache
 G:\Program Files (x86)\Web\Web\MongoDB\obj\Debug\netcoreapp2.2\MongoDB.AssemblyInfo.cs
 G:\Program Files (x86)\Web\Web\MongoDB\bin\Debug\netcoreapp2.2\MongoDB.pdb
 G:\Program Files (x86)\Web\Web\MongoDB\obj\Debug\netcoreapp2.2\MongoDB.dll
 G:\Program Files (x86)\Web\Web\MongoDB\obj\Debug\netcoreapp2.2\MongoDB.pdb
 G:\Program Files (x86)\Web\Web\MongoDB\obj\Debug\netcoreapp2.2\MongoDB.csprojAssemblyReference.cache
+G:\Program Files (x86)\Web\Web\MongoDB\obj\Debug\netcoreapp2.2\MongoDB.csproj.CoreCompileInputs.cache

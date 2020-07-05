@@ -8,7 +8,6 @@ G:\Program Files (x86)\Web\Web\Test\bin\Debug\netcoreapp2.2\Reflection.dll
 G:\Program Files (x86)\Web\Web\Test\bin\Debug\netcoreapp2.2\MysqlEntity.Core.pdb
 G:\Program Files (x86)\Web\Web\Test\bin\Debug\netcoreapp2.2\Reflection.pdb
 G:\Program Files (x86)\Web\Web\Test\obj\Debug\netcoreapp2.2\Test.csprojAssemblyReference.cache
-G:\Program Files (x86)\Web\Web\Test\obj\Debug\netcoreapp2.2\Test.csproj.CoreCompileInputs.cache
 G:\Program Files (x86)\Web\Web\Test\obj\Debug\netcoreapp2.2\Test.AssemblyInfoInputs.cache
 G:\Program Files (x86)\Web\Web\Test\obj\Debug\netcoreapp2.2\Test.AssemblyInfo.cs
 G:\Program Files (x86)\Web\Web\Test\obj\Debug\netcoreapp2.2\Test.csproj.CopyComplete

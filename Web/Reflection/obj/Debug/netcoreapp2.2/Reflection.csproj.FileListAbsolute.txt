@@ -1,7 +1,6 @@
 G:\Program Files (x86)\Web\Web\Reflection\bin\Debug\netcoreapp2.2\Reflection.deps.json
 G:\Program Files (x86)\Web\Web\Reflection\bin\Debug\netcoreapp2.2\Reflection.dll
 G:\Program Files (x86)\Web\Web\Reflection\bin\Debug\netcoreapp2.2\Reflection.pdb
-G:\Program Files (x86)\Web\Web\Reflection\obj\Debug\netcoreapp2.2\Reflection.csproj.CoreCompileInputs.cache
 G:\Program Files (x86)\Web\Web\Reflection\obj\Debug\netcoreapp2.2\Reflection.AssemblyInfoInputs.cache
 G:\Program Files (x86)\Web\Web\Reflection\obj\Debug\netcoreapp2.2\Reflection.AssemblyInfo.cs
 G:\Program Files (x86)\Web\Web\Reflection\obj\Debug\netcoreapp2.2\Reflection.dll
@@ -16,3 +15,4 @@ G:\Program Files (x86)\Web\Web\Reflection\bin\Debug\netcoreapp2.2\Interface.dll
 G:\Program Files (x86)\Web\Web\Reflection\bin\Debug\netcoreapp2.2\Interface.pdb
 G:\Program Files (x86)\Web\Web\Reflection\bin\Debug\netcoreapp2.2\Model.dll
 G:\Program Files (x86)\Web\Web\Reflection\bin\Debug\netcoreapp2.2\Model.pdb
+G:\Program Files (x86)\Web\Web\Reflection\obj\Debug\netcoreapp2.2\Reflection.csproj.CoreCompileInputs.cache

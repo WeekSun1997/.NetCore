@@ -25,18 +25,20 @@
                 datatype: 'json',
                 success: function (data) {
                     console.info(data)
+                    if (!data.isShow) {
+                        $("#ss").css("display", "none");
+                    }
                     var cols = [];
                     $.each(data.data.table, function (i, e) {
                         if (e.filedType != "Hide") {
                             if (e.fiedx == "Left") {
-                                
+
                                 cols[i] = { field: e.remask, title: e.filedName, fixed: 'left', width: e.colLength, align: 'center' }
                             } else if (e.filedType == "Date") {
-                            
+
                                 cols[i] = {
-                                    field: e.remask, title: e.filedName, align: 'center', templet: function (d) {
-                                       
-                                        return layui.util.toDateString(d[e.bindList])
+                                    field: e.remask, title: e.filedName, align: 'center', width: e.colLength, templet: function (d) {
+                                        return layui.util.toDateString(d[e.bindList],'yyyy-MM-dd')
                                     }
                                 }
                             }
@@ -121,10 +123,10 @@
         <button class="layui-btn layui-btn-sm" id="Search" lay-event="">筛选</button>
     </div>
     <table id="tab" lay-filter="tab"></table>
-    <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    </script>
+    <div id="barDemo" style="display:none">
+            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a id="ss" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </div>
 </body>
 </html>

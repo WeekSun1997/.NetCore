@@ -11,7 +11,6 @@ G:\Program Files (x86)\Web\Web\JWTMiddleware\bin\Debug\netcoreapp2.2\Microsoft.I
 G:\Program Files (x86)\Web\Web\JWTMiddleware\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.pdb
 G:\Program Files (x86)\Web\Web\JWTMiddleware\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.xml
 G:\Program Files (x86)\Web\Web\JWTMiddleware\obj\Debug\netcoreapp2.2\JWTMiddleware.csprojAssemblyReference.cache
-G:\Program Files (x86)\Web\Web\JWTMiddleware\obj\Debug\netcoreapp2.2\JWTMiddleware.csproj.CoreCompileInputs.cache
 G:\Program Files (x86)\Web\Web\JWTMiddleware\obj\Debug\netcoreapp2.2\JWTMiddleware.AssemblyInfoInputs.cache
 G:\Program Files (x86)\Web\Web\JWTMiddleware\obj\Debug\netcoreapp2.2\JWTMiddleware.AssemblyInfo.cs
 G:\Program Files (x86)\Web\Web\JWTMiddleware\obj\Debug\netcoreapp2.2\JWTMiddleware.csproj.CopyComplete
@@ -24,3 +23,4 @@ G:\Program Files (x86)\Web\Web\JWTMiddleware\obj\Debug\netcoreapp2.2\JWTMiddlewa
 G:\Program Files (x86)\Web\Web\JWTMiddleware\obj\Debug\netcoreapp2.2\JWTMiddleware.pdb
 G:\Program Files (x86)\Web\Web\JWTMiddleware\bin\Debug\netcoreapp2.2\MongoDB.dll
 G:\Program Files (x86)\Web\Web\JWTMiddleware\bin\Debug\netcoreapp2.2\MongoDB.pdb
+G:\Program Files (x86)\Web\Web\JWTMiddleware\obj\Debug\netcoreapp2.2\JWTMiddleware.csproj.CoreCompileInputs.cache

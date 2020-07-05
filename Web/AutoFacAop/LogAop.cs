@@ -39,7 +39,7 @@ namespace AutoFacAop
             MongoDBServer mongo = new MongoDBServer();
             LogModel log = new LogModel()
             {
-                UserID = User.UserId,
+                UserID = User.BillId,
                 UserName = User.UserName,
                 MethodName = MethodName,
                 SysDate = DateTime.Now,

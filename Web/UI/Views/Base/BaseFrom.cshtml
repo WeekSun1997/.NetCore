@@ -24,20 +24,20 @@
                 xhrFields: { withCredentials: true },
                 dataType: "json",
                 success: function (data) {
-                    console.info(data.data.dataList)
+                    console.info(data)
                     $.each(data.data.dataList, function (i, e) {
                         var html = "";
                         html += '<div class="layui-form-item layui-inline">';
                         html += '<label class="layui-form-label">' + e.filedName + '</label>';
-                        html += '<div class="layui-input-inline">'
+                        html += '<div class="layui-input-inline" >'
                         if (e.filedType == "Date") {
                             var t = "";
                             if (e.value != "" && e.value != undefined) {
                                 t = e.value;
                             }
-                            html += '<input type="Date"  value="' + t + '"  name="' + e.remask + '" id="' + e.remask + '" class="layui-input">'
+                            html += '<input type="Date"  value="' + t + '"  name="' + e.remask + '" id="' + e.remask + '" style="width:' + e.colLength+'px" class="layui-input">'
                         } else if (e.filedType == "Select") {
-                            html += '<select    name="' + e.remask + '" id="' + e.remask + '" lay-filter="' + e.remask + '">'
+                            html += '<select  style="width:' + e.colLength +'px"  name="' + e.remask + '" id="' + e.remask + '" lay-filter="' + e.remask + '">'
                             var index = e.bindList;
                             var tname = index.toLowerCase()
                             $.each(data.data[tname], function (j, k) {
@@ -61,14 +61,21 @@
                             if (e.value != "" && e.value != undefined) {
                                 t = e.value;
                             }
-                            html += '<input type="Text" value="' + t + '" name="' + e.remask + '" id="' + e.remask + '" readonly="true"  class="layui-input">'
+                            html += '<input type="Text" style="width:' + e.colLength +'px"  value="' + t + '" name="' + e.remask + '" id="' + e.remask + '" readonly="true"  class="layui-input">'
+                        } else if (e.filedType == "Texter") {
+                            var t = "";
+                            if (e.value != "" && e.value != undefined) {
+                                t = e.value;
+                            }
+                            console.info(t)
+                            html += '<textarea rows="10"  cols="35"  style="width:' + e.colLength + 'px"    value="' + t + '" name="' + e.remask + '" id="' + e.remask + '"  class="layui-textarea">'+t+'</textarea>'
                         }
                         else {
                             var t = "";
                             if (e.value != "" && e.value != undefined) {
                                 t = e.value;
                             }
-                            html += '<input type="Text" value="' + t + '" name="' + e.remask + '" id="' + e.remask + '"  class="layui-input">'
+                            html += '<input type="Text" value="' + t + '"  style="width:' + e.colLength +'px"  name="' + e.remask + '" id="' + e.remask + '"  class="layui-input">'
                         }
                         $("#body").append(html)
                     })
@@ -90,7 +97,9 @@
                                 , icon: 1
                                 , time: 1000
                             }, function () {
-                                location.reload();
+                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+                                window.parent.location.reload();
                             });
                         } else {
                             layer.msg(data.msg, {
@@ -109,7 +118,7 @@
         <input type="hidden" value="@ViewData["BillID"]" id="TableBillID" />
         <input type="hidden" value="@ViewData["BillNo"]" id="TableBillNo" />
         <div id="body"></div>
-        <center><button type="button" id="add" class="layui-btn">添加</button></center>
+        <center><button type="button" id="add" class="layui-btn">保存</button></center>
     </form>
 </body>
 </html>

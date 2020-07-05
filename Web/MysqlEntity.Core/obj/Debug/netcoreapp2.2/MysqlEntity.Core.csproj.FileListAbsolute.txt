@@ -1,6 +1,5 @@
 G:\Program Files (x86)\Web\Web\MysqlEntity.Core\bin\Debug\netcoreapp2.2\MysqlEntity.Core.deps.json
 G:\Program Files (x86)\Web\Web\MysqlEntity.Core\bin\Debug\netcoreapp2.2\MysqlEntity.Core.dll
-G:\Program Files (x86)\Web\Web\MysqlEntity.Core\obj\Debug\netcoreapp2.2\MysqlEntity.Core.csproj.CoreCompileInputs.cache
 G:\Program Files (x86)\Web\Web\MysqlEntity.Core\obj\Debug\netcoreapp2.2\MysqlEntity.Core.AssemblyInfoInputs.cache
 G:\Program Files (x86)\Web\Web\MysqlEntity.Core\obj\Debug\netcoreapp2.2\MysqlEntity.Core.AssemblyInfo.cs
 G:\Program Files (x86)\Web\Web\MysqlEntity.Core\obj\Debug\netcoreapp2.2\MysqlEntity.Core.csprojAssemblyReference.cache
@@ -10,3 +9,4 @@ G:\Program Files (x86)\Web\Web\MysqlEntity.Core\obj\Debug\netcoreapp2.2\MysqlEnt
 G:\Program Files (x86)\Web\Web\MysqlEntity.Core\bin\Debug\netcoreapp2.2\MongoDB.dll
 G:\Program Files (x86)\Web\Web\MysqlEntity.Core\bin\Debug\netcoreapp2.2\MongoDB.pdb
 G:\Program Files (x86)\Web\Web\MysqlEntity.Core\obj\Debug\netcoreapp2.2\MysqlEntity.Core.csproj.CopyComplete
+G:\Program Files (x86)\Web\Web\MysqlEntity.Core\obj\Debug\netcoreapp2.2\MysqlEntity.Core.csproj.CoreCompileInputs.cache

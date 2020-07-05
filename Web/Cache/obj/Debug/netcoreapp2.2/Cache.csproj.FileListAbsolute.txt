@@ -3,7 +3,6 @@ G:\Program Files (x86)\Web\Web\Cache\bin\Debug\netcoreapp2.2\Cache.dll
 G:\Program Files (x86)\Web\Web\Cache\bin\Debug\netcoreapp2.2\Interface.dll
 G:\Program Files (x86)\Web\Web\Cache\bin\Debug\netcoreapp2.2\Interface.pdb
 G:\Program Files (x86)\Web\Web\Cache\obj\Debug\netcoreapp2.2\Cache.csprojAssemblyReference.cache
-G:\Program Files (x86)\Web\Web\Cache\obj\Debug\netcoreapp2.2\Cache.csproj.CoreCompileInputs.cache
 G:\Program Files (x86)\Web\Web\Cache\obj\Debug\netcoreapp2.2\Cache.AssemblyInfoInputs.cache
 G:\Program Files (x86)\Web\Web\Cache\obj\Debug\netcoreapp2.2\Cache.AssemblyInfo.cs
 G:\Program Files (x86)\Web\Web\Cache\obj\Debug\netcoreapp2.2\Cache.csproj.CopyComplete
@@ -21,3 +20,4 @@ G:\Program Files (x86)\Web\Web\Cache\bin\Debug\netcoreapp2.2\MongoDB.pdb
 G:\Program Files (x86)\Web\Web\Cache\bin\Debug\netcoreapp2.2\MysqlEntity.Core.pdb
 G:\Program Files (x86)\Web\Web\Cache\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Http.Abstractions.dll
 G:\Program Files (x86)\Web\Web\Cache\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Http.Abstractions.xml
+G:\Program Files (x86)\Web\Web\Cache\obj\Debug\netcoreapp2.2\Cache.csproj.CoreCompileInputs.cache

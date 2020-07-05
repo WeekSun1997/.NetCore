@@ -31,7 +31,6 @@ G:\Program Files (x86)\Web\Web\API\bin\Debug\netcoreapp2.2\Reflection.pdb
 G:\Program Files (x86)\Web\Web\API\bin\Debug\netcoreapp2.2\WebSocketMagger.pdb
 G:\Program Files (x86)\Web\Web\API\bin\Debug\netcoreapp2.2\Model.pdb
 G:\Program Files (x86)\Web\Web\API\obj\Debug\netcoreapp2.2\API.csprojAssemblyReference.cache
-G:\Program Files (x86)\Web\Web\API\obj\Debug\netcoreapp2.2\API.csproj.CoreCompileInputs.cache
 G:\Program Files (x86)\Web\Web\API\obj\Debug\netcoreapp2.2\API.RazorAssemblyInfo.cache
 G:\Program Files (x86)\Web\Web\API\obj\Debug\netcoreapp2.2\API.RazorAssemblyInfo.cs
 G:\Program Files (x86)\Web\Web\API\obj\Debug\netcoreapp2.2\API.AssemblyInfoInputs.cache
@@ -46,3 +45,4 @@ G:\Program Files (x86)\Web\Web\API\bin\Debug\netcoreapp2.2\AttributeArray.dll
 G:\Program Files (x86)\Web\Web\API\bin\Debug\netcoreapp2.2\AttributeArray.pdb
 G:\Program Files (x86)\Web\Web\API\bin\Debug\netcoreapp2.2\IdentityConfig.dll
 G:\Program Files (x86)\Web\Web\API\bin\Debug\netcoreapp2.2\IdentityConfig.pdb
+G:\Program Files (x86)\Web\Web\API\obj\Debug\netcoreapp2.2\API.csproj.CoreCompileInputs.cache

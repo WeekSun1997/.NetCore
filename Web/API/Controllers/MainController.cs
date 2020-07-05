@@ -37,7 +37,7 @@ namespace API.Controllers
         public ActionResult GetFriendList()
         {
             Byte[] UserByte = HttpContext.Session.Get("user");
-            int UserId = Library.Other.SerializeToObject<Sysuser>(UserByte).UserId;
+            int UserId = Library.Other.SerializeToObject<Sysuser>(UserByte).BillId;
             using (webdevContext db = new webdevContext())
             {
                 object FriendList = null;
@@ -47,11 +47,11 @@ namespace API.Controllers
                 {
                     FriendList = (from a in db.Friend
                                   join b in db.Sysuser
-                                  on a.FriendId equals b.UserId
+                                  on a.FriendId equals b.BillId
                                   where a.UserId == UserId
                                   select new
                                   {
-                                      b.UserId,
+                                      b.BillId,
                                       b.UserName
                                   }).ToList();
                     // FriendList = db.Friend.Join(db.Sysuser,) Where(a => a.UserId == UserId).ToList();
@@ -75,14 +75,18 @@ namespace API.Controllers
         [ProducesResponseType(400)]
         public ActionResult LoadSysList()
         {
+           
+                Byte[] UserByte = HttpContext.Session.Get("user");
+                int UserId = Library.Other.SerializeToObject<Sysuser>(UserByte).BillId;
+                DataSet ds;
             try
             {
-                DataSet ds;
                 string mgs = "";
-                string sql = "SELECT Modularid,ModularName,ModularNametext from billmodular;" +
-                             "SELECT  a.id,b.Modularid,modularinfoid,ModularInfoulr,ModularInfoname," +
-                             "Modulardtnametext  from billmodularinfo  " +
-                             "a join billmodular b on a.BillID=b.ID;";
+                string sql = $@"SELECT Modularid,ModularName,ModularNametext from billmodular  where IFNULL(IsShow,0)<>4 or 4={UserId};
+                             SELECT  a.id,b.Modularid,modularinfoid,ModularInfoulr,ModularInfoname,
+                             Modulardtnametext  from billmodularinfo  
+                             a join billmodular b on a.BillID=b.ID
+							 where IFNULL(a.IsShow,0)<>4 or 4={UserId}";
                 ds = db.QuerySet(sql).Result;
                 return Json(new { IsSuccess = true, data = ds });
             }
@@ -92,6 +96,6 @@ namespace API.Controllers
             }
         }
 
-       
+
     }
 }

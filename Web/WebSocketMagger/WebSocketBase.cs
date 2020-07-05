@@ -22,7 +22,7 @@ namespace WebSocketMagger
             if (!_socketConcurrentDictionary.Values.Contains(socket))
             {
                 context.Session.TryGetValue("user", out Byte[] us);
-                string socketId = Library.Other.SerializeToObject<Sysuser>(us).UserId.ToString();
+                string socketId = Library.Other.SerializeToObject<Sysuser>(us).BillId.ToString();
                 _socketConcurrentDictionary.TryAdd(CreateGuid(socketId), socket);
             }
             else
@@ -57,11 +57,11 @@ namespace WebSocketMagger
             using (webdevContext context = new webdevContext())
             {
                 string userId = "";
-                var user = context.Sysuser.Where(a => a.UserId.ToString() == socketId).FirstOrDefault();
+                var user = context.Sysuser.Where(a => a.BillId.ToString() == socketId).FirstOrDefault();
                 if (user == null)
                     userId = Guid.NewGuid().ToString();
                 else
-                    userId = user.UserId.ToString();
+                    userId = user.BillId.ToString();
                 return userId;
 
             }

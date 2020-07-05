@@ -14,7 +14,9 @@
 
 
   <ItemGroup>
-    <Folder Include="wwwroot\Script\" />
+    <Content Update="wwwroot\layuiadmin\layui\layui.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

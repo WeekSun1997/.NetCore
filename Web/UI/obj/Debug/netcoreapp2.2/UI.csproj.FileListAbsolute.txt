@@ -49,3 +49,4 @@ G:\Program Files (x86)\Web\Web\UI\obj\Debug\netcoreapp2.2\Razor\Views\Base\BaseS
 G:\Program Files (x86)\Web\Web\UI\obj\Debug\netcoreapp2.2\Razor\Views\Base\SysDownListView.g.cshtml.cs
 G:\Program Files (x86)\Web\Web\UI\obj\Debug\netcoreapp2.2\Razor\Views\Echarts\BaseEcharts.g.cshtml.cs
 G:\Program Files (x86)\Web\Web\UI\obj\Debug\netcoreapp2.2\UI.csprojAssemblyReference.cache
+G:\Program Files (x86)\Web\Web\UI\obj\Debug\netcoreapp2.2\Razor\Views\V\Index.g.cshtml.cs

@@ -1,6 +1,5 @@
 G:\Program Files (x86)\Web\Web\AutoFacAop\bin\Debug\netcoreapp2.2\AutoFacAop.deps.json
 G:\Program Files (x86)\Web\Web\AutoFacAop\bin\Debug\netcoreapp2.2\AutoFacAop.dll
-G:\Program Files (x86)\Web\Web\AutoFacAop\obj\Debug\netcoreapp2.2\AutoFacAop.csproj.CoreCompileInputs.cache
 G:\Program Files (x86)\Web\Web\AutoFacAop\obj\Debug\netcoreapp2.2\AutoFacAop.AssemblyInfoInputs.cache
 G:\Program Files (x86)\Web\Web\AutoFacAop\obj\Debug\netcoreapp2.2\AutoFacAop.AssemblyInfo.cs
 G:\Program Files (x86)\Web\Web\AutoFacAop\bin\Debug\netcoreapp2.2\AutoFacAop.pdb
@@ -20,3 +19,4 @@ G:\Program Files (x86)\Web\Web\AutoFacAop\bin\Debug\netcoreapp2.2\Interface.pdb
 G:\Program Files (x86)\Web\Web\AutoFacAop\bin\Debug\netcoreapp2.2\Model.pdb
 G:\Program Files (x86)\Web\Web\AutoFacAop\bin\Debug\netcoreapp2.2\AttributeArray.dll
 G:\Program Files (x86)\Web\Web\AutoFacAop\bin\Debug\netcoreapp2.2\AttributeArray.pdb
+G:\Program Files (x86)\Web\Web\AutoFacAop\obj\Debug\netcoreapp2.2\AutoFacAop.csproj.CoreCompileInputs.cache
